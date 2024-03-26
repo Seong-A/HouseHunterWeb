@@ -4,40 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HouseHunter</title>
-    <link rel="stylesheet" href="public/stylesheets/main.css">
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <script>
+        function loadHeader() {
+            fetch('/header') 
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header-container').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        
+            window.onload = loadHeader;
+
+    </script>
 </head>
 <body>
-    <header>
-        <h1 class="logo">
-            <a href="#"><img src="public/image/househunter_logo.png"/></a>
-        </h1>
-        <div class="nav">
-            <ul>
-                <li><a href="#">관심목록</a></li>
-                <li><a href="#">지도</a></li>
-                <li><a href="#">마이페이지</a></li>
-            </ul>
-            <button class="login-button">로그인</button>
-        </div>
-    </header>
+    <div id="header-container"></div>
 
     <main>
         <div class="rtype_layout">
             <div class="rtype-container">
                 <a href="#"><button class="rtype_btn">원룸</button></a>
-                <img class="image-overlay" src="public/image/room1.gif" alt="room1">
+                <img class="image-overlay" src="image/room1.gif" alt="room1">
             </div>
             <div class="rtype-container">
                 <a href="#"><button class="rtype_btn">투룸, 쓰리룸</button></a>
-                <img class="image-overlay" src="public/image/room2.gif" alt="room2">
+                <img class="image-overlay" src="image/room2.gif" alt="room2">
             </div>
             <div class="rtype-container">
                 <a href="#"><button class="rtype_btn">오피스텔</button></a>
-                <img class="image-overlay" src="public/image/officetel.gif" alt="officetel">
+                <img class="image-overlay" src="image/officetel.gif" alt="officetel">
             </div>
             <div class="rtype-container">
                 <a href="#"><button class="rtype_btn">아파트</button></a>
-                <img class="image-overlay" src="public/image/apartment.gif" alt="apartment">
+                <img class="image-overlay" src="image/apartment.gif" alt="apartment">
             </div>
         </div>
         <div class="ai_layout">
@@ -47,8 +48,8 @@
         </div>
         <div class="event_layout">
             <h2>💌 이벤트</h2>
-            <a href="#"><img class="event" src="public/image/event1.png"/></a>
-            <a href="#"><img class="event" src="public/image/event2.png"/></a>
+            <a href="#"><img class="event" src="image/event1.png"/></a>
+            <a href="#"><img class="event" src="image/event2.png"/></a>
         </div>
     </main>
 
@@ -57,6 +58,5 @@
         <p>고객센터 02-111-2222</p>
     </footer>
 
-    <script src="main.js"></script> <!-- main.js 파일 추가 -->
 </body>
 </html>

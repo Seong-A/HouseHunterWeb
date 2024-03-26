@@ -1,0 +1,62 @@
+.login-container {
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 100px;
+    padding: 20px;
+}
+
+.login-title {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 25px;
+    font-family: "Black Han Sans", sans-serif;
+}
+
+.form-field {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.id, .password {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #000;
+    border-radius: 0;
+    color: #000000;
+    font-family: 'Object Sans','Noto Sans KR',sans-serif;
+    font-size: 15px;
+    outline: none;
+    padding: 15px 0;
+    width: 97%;
+    height: auto;
+}
+
+.login {
+    background-color: transparent;
+    border: none;
+    border: 1px solid #000000;
+    border-radius: 0;
+    color: #000000;
+    font-family: 'Object Sans','Noto Sans KR',sans-serif;
+    font-size: 15px;
+    outline: none;
+    padding: 15px 0;
+    width: 97%;
+    height: auto;
+}
+
+.join {
+    background-color: transparent;
+    border: none;
+    border: 1px solid #000000;
+    border-radius: 0;
+    color: #000000;
+    font-family: 'Object Sans','Noto Sans KR',sans-serif;
+    font-size: 15px;
+    outline: none;
+    padding: 15px 0;
+    width: 97%;
+    height: auto;
+    margin-top: 30px;
+}
