@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HouseHunter Mypage</title>
+    <link rel="stylesheet" href="/stylesheets/mypage.css">
+    <script>
+        function loadHeader() {
+            fetch('/header') 
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header-container').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+
+            document.getElementById('login-button').addEventListener('click', loginUser);
+        }
+
+        window.onload = loadHeader;
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <main>
+        <div class="mypage_nav">
+            <a class="mypage_text" href="#">마이페이지</a>
+            <ul>
+                <li><a href="#">회원정보수정</a></li>
+                <li><a href="#">추천 콘텐츠</a></li>
+                <li><a href="#">고객센터</a></li>
+                <li><a href="#">로그아웃</a></li>
+            </ul>
+        </div>
+
+        <div class="mypage">
+            <img src="/image/user.png">
+            <div class="mypage_layout">
+                <h2>00</h2>
+                <h2>님의 마이페이지</h2>
+            </div>
+        </div>
+        <div class="mypage_btn">
+            <button class="button">최근 본 집</button>
+            <button class="button">찜한 집</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>하우스헌터</p>
+        <p>고객센터 02-111-2222</p>
+    </footer>
+
+    <script src="main.js"></script> <!-- main.js 파일 추가 -->
+</body>
+</html>
