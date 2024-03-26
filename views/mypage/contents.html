@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HouseHunter Mypage</title>
+    <link rel="stylesheet" href="/stylesheets/contents.css">
+    <script>
+        function loadHeader() {
+            fetch('/header') 
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header-container').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+
+            document.getElementById('login-button').addEventListener('click', loginUser);
+        }
+
+        window.onload = loadHeader;
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <main>
+        <div class="mypage_nav">
+            <a class="mypage_text" href="mypage/mypage">마이페이지</a>
+            <ul>
+                <li><a href="#">회원정보수정</a></li>
+                <li><a href="contents">추천 콘텐츠</a></li>
+                <li><a href="#">고객센터</a></li>
+                <li><a href="#">로그아웃</a></li>
+            </ul>
+        </div>
+
+        <div class="contents">
+            <h1>나를 위한 추천 콘텐츠</h1>
+            <ul>
+                <li><img src="/image/contents_check.png"><a href="https://post.naver.com/viewer/postView.naver?volumeNo=29572083&memberNo=5113437">초보 자취러 필독! 자취방 체크리스트</a></li>
+                <li><img src="/image/contents_data.png"><a href="https://blog.naver.com/wave1619/223360816573">서울 원룸 전세 양극화 둔화</a></li>
+                <li><img src="/image/contents_home.png"><a href="https://blog.naver.com/keaijinjin/223376940909">청약홈 개편 내용 확인하기</a></li>
+                <li><img src="/image/contents_warning.png"><a href="https://post.naver.com/viewer/postView.naver?volumeNo=33077720&memberNo=5113437&navigationType=push">보이스피싱으로 청약통장 해지했어요. 다시 살릴 수 있을까요?</a></li>
+                <li><img src="/image/contents_warning.png"><a href="https://brunch.co.kr/@e24e25be76964f4/44">전세사기 당신도 피할 수 없다!</a></li>
+                <li><img src="/image/contents_check.png"><a href="https://blog.naver.com/kimgr1010/223308098047">월세 중도 해지 가능할까?</a></li>
+                <li><img src="/image/contents_data.png"><a href="https://blog.naver.com/jiwonph/222897247120">이 시국에 나홀로 집값 오른 동네</a></li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>하우스헌터</p>
+        <p>고객센터 02-111-2222</p>
+    </footer>
+
+    <script src="main.js"></script> <!-- main.js 파일 추가 -->
+</body>
+</html>
