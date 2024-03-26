@@ -1,17 +1,14 @@
 const express = require('express');
-const app = express();
 const path = require('path');
+
+const app = express();
 
 app.listen(5500, function(){
     console.log('listening on 5500');
 })
 
-app.get('/', (req,res) => {
-    res.send('Hello World!')
-})
-
-app.get('/main', (req, res) => {
-    const filePath = path.join(__dirname, 'public', 'html', 'main.html');
+app.get('/', (req, res) => {
+    const filePath = path.join(__dirname, 'views', 'main', 'main.html');
     res.sendFile(filePath);
 });
 
