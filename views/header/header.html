@@ -5,30 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HouseHunter</title>
     <link rel="stylesheet" href="/stylesheets/header.css">
-    <script>
-        async function checkLoginAndRedirect() {
-            try {
-                const response = await fetch('/check-login');
-                const data = await response.json();
-
-                if (data.isLoggedIn) {
-                    await fetch('/set-session', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ isLoggedIn: true, userId: data.userId }),
-                    });
-
-                    window.location.href = '/mypage.html';
-                } else {
-                    window.location.href = 'user/login.html';
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
-    </script>
 </head>
 <body>
     <header>
@@ -41,8 +17,38 @@
                 <li><a href="#">지도</a></li>
                 <li><a href="mypage/mypage">마이페이지</a></li>
             </ul>
-            <button class="login-button" onclick="checkLoginAndRedirect()">로그인</button>
+            <button class="login-button" onclick="location.href='user/login'">로그인</button>
         </div>
     </header>
+
+    <script>
+        // async function checkLoginAndRedirect() {
+        //     try {
+        //         const response = await fetch('/check-login');
+        //         const data = await response.json();
+    
+        //         if (data.isLoggedIn) {
+        //             await fetch('/set-session', {
+        //                 method: 'POST',
+        //                 headers: {
+        //                     'Content-Type': 'application/json',
+        //                 },
+        //                 body: JSON.stringify({ isLoggedIn: true, userId: data.userId }),
+        //             });
+    
+        //             window.location.href = '/mypage/mypage';
+        //         } else {
+        //             window.location.href = '/user/login';
+        //         }
+        //     } catch (error) {
+        //         console.error('Error:', error);
+        //     }
+        // }
+    
+        document.querySelector('.login-button').addEventListener('click', function() {
+            window.location.href = 'user/login';
+        });
+    </script>
+
 </body>
 </html>

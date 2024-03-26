@@ -1,7 +1,7 @@
 var mysql = require('mysql');
 var config = require('./config');
 
-var connection = mysql.createConnection({
+var pool = mysql.createPool({
     host: config.host,
     user: config.user,
     password: config.password,
@@ -9,7 +9,7 @@ var connection = mysql.createConnection({
 });
 
 module.exports = {
-    getConnection: function() {
-        return connection;
+    getPool: function() {
+        return pool;
     }
 };

@@ -1,4 +1,6 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const mysqlModule = require('./db/connect');
 const path = require('path');
 const mainRoutes = require('./routes/mainRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -7,6 +9,9 @@ const mypageRoutes = require('./routes/mypageRoutes');
 
 const app = express();
 const port = 5500;
+
+const connection = mysqlModule.getPool();
+app.use(bodyParser.json());
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
