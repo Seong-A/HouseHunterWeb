@@ -32,13 +32,6 @@ exports.getJoinPage = (req, res) => {
     res.sendFile(filePath);
 };
 
-exports.checkLogin = (req, res) => {
-    const isLoggedIn = req.session.isLoggedIn;
-    const userId = req.session.userId;
-
-    res.json({ isLoggedIn, userId });
-};
-
 exports.registerUser = (req, res) => {
     const userData = req.body;
 
