@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HouseHunter</title>
+    <link rel="stylesheet" href="/stylesheets/map.css">
+    <script>
+        function loadHeader() {
+            fetch('/header') 
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header-container').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        
+        window.onload = loadHeader;
+
+        // 필터 버튼 클릭 시 필터 내용을 표시하는 함수
+        function showFilterContent(filterType) {
+            // 모든 필터 내용을 숨김
+            var filterContents = document.querySelectorAll('.filter-content');
+            filterContents.forEach(function(content) {
+                content.style.display = 'none';
+            });
+
+            // 해당하는 필터 내용을 보임
+            var filterContent = document.querySelector('.' + filterType);
+            if (filterContent) {
+                filterContent.style.display = 'block';
+            }
+        }
+
+        // 각 필터 버튼에 클릭 이벤트 리스너 추가
+        document.querySelectorAll('.filter button').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var filterType = button.className.split(' ')[0] + '-content';
+                showFilterContent(filterType);
+            });
+        });
+
+        // 각 필터 항목에 대한 클릭 이벤트 처리기 함수
+        function toggleSelection(pElement) {
+            // 선택 상태를 토글
+            if (pElement.classList.contains('selected')) {
+                pElement.classList.remove('selected');
+            } else {
+                pElement.classList.add('selected');
+            }
+        }
+
+        // 적용하기 버튼 클릭 이벤트 처리기 함수
+        document.getElementById('applyRoomTypesButton').addEventListener('click', function() {
+            var selectedRoomTypes = document.querySelectorAll('.roomfilter-content input[type="checkbox"]:checked');
+            var selectedRoomTypesText = Array.from(selectedRoomTypes).map(function(checkbox) {
+                return checkbox.value;
+            }).join(', ');
+
+            document.querySelector('.roomfilter p').textContent = '방유형: ' + selectedRoomTypesText;
+        });
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div class="container">
+        <div class="filter-container">
+            <div class="filter">
+                <button class="roomfilter">
+                    <p>방유형</p>
+                </button>
+                <div class="filter-content roomfilter-content">
+                    <label><input type="checkbox" value="원룸"> 원룸</label>
+                    <label><input type="checkbox" value="투·쓰리룸"> 투·쓰리룸</label>
+                    <label><input type="checkbox" value="오피스텔"> 오피스텔</label>
+                    <button id="applyRoomTypesButton">적용하기</button>
+                </div>
+            </div>
+            <div class="filter">
+                <button class="depositfilter">
+                    <p>보증금</p>
+                </button>
+                <div class="filter-content depositfilter-content">
+                    <p>보증금</p>
+                </div>
+            </div>
+            <div class="filter">
+                <button class="managementfilter">
+                    <p>관리비</p>
+                </button>
+                <div class="filter-content managementfilter-content">
+                    <p>관리비</p>
+                </div>
+            </div>
+        </div>
+        <div id="selectedRoomTypes"></div>
+        <section class="section" id="section">
+            <div class="map" id="map"></div>
+            <code id="snippet" class="snippet"></code>
+        </section>
+    </div>
+
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=<%= naverMapAPIClientID %>"></script>
+    <script>
+        var mapDiv = document.getElementById('map');
+        var map = new naver.maps.Map(mapDiv);
+    </script>
+</body>
+</html>
+

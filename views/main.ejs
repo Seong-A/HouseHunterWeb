@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HouseHunter</title>
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <script>
+        function loadHeader() {
+            fetch('/header') 
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header-container').innerHTML = data;
+                    // 로그인 버튼에 클릭 이벤트 핸들러 등록
+                    document.querySelector('.login-button').addEventListener('click', function() {
+                        checkLogin(); 
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        
+        window.onload = loadHeader;
+
+        async function checkLogin() {
+            try {
+                const response = await fetch('/check-login');
+                const data = await response.json();
+
+                if (data.isLoggedIn) {
+                    window.location.href = '/mypage';
+                } else {
+                    window.location.href = '/login';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <main>
+        <div class="rtype_layout">
+            <div class="rtype-container">
+                <a href="#"><button class="rtype_btn">원룸</button></a>
+                <img class="image-overlay" src="image/room1.gif" alt="room1">
+            </div>
+            <div class="rtype-container">
+                <a href="#"><button class="rtype_btn">투룸, 쓰리룸</button></a>
+                <img class="image-overlay" src="image/room2.gif" alt="room2">
+            </div>
+            <div class="rtype-container">
+                <a href="#"><button class="rtype_btn">오피스텔</button></a>
+                <img class="image-overlay" src="image/officetel.gif" alt="officetel">
+            </div>
+            <div class="rtype-container">
+                <a href="#"><button class="rtype_btn">아파트</button></a>
+                <img class="image-overlay" src="image/apartment.gif" alt="apartment">
+            </div>
+        </div>
+        <div class="ai_layout">
+            <h2>💡 AI가 추천해주는</h2>
+            <h2 id="ai">00구</h2>
+            <h2>집</h2>
+        </div>
+        <div class="event_layout">
+            <h2>💌 이벤트</h2>
+            <a href="#"><img class="event" src="image/event1.png"/></a>
+            <a href="#"><img class="event" src="image/event2.png"/></a>
+        </div>
+    </main>
+
+    <footer>
+        <p>하우스헌터</p>
+        <p>고객센터 02-111-2222</p>
+    </footer>
+
+</body>
+</html>

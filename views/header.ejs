@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HouseHunter</title>
+    <link rel="stylesheet" href="/stylesheets/header.css">
+</head>
+<body>
+    <header>
+        <h1 class="logo">
+            <a href="/"><img src="/image/househunter_logo.png" alt="HouseHunter Logo"></a>
+        </h1>
+        <div class="nav">
+            <ul>
+                <li><a href="#">관심목록</a></li>
+                <li><a href="/map">지도</a></li>
+                <li><a href="/mypage">마이페이지</a></li>
+            </ul>
+            <a class="login-button">로그인</a>
+        </div>
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginButton = document.querySelector('.login-button');
+            loginButton.addEventListener('click', function() {
+                checkLogin(); 
+            });
+        });
+
+        async function checkLogin() {
+            try {
+                const response = await fetch('/check-login');
+                const data = await response.json();
+
+                if (data.isLoggedIn) {
+                    window.location.href = '/mypage';
+                } else {
+                    window.location.href = '/login';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+    </script>
+    
+</body>
+</html>
