@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HouseHunter</title>
     <link rel="stylesheet" href="/stylesheets/roomdetail.css">
+
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=<%= naverMapAPIClientID %>"></script>
+
     <script>
         function loadHeader() {
             fetch('/header') 
@@ -19,6 +22,21 @@
         }
 
         window.onload = loadHeader;
+
+        async function checkLogin() {
+            try {
+                const response = await fetch('/check-login');
+                const data = await response.json();
+
+                if (data.isLoggedIn) {
+                    window.location.href = '/mypage';
+                } else {
+                    window.location.href = '/login';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
 
         async function updateUI() {
             try {
@@ -37,6 +55,15 @@
             } catch (error) {
                 console.error('Error:', error);
             }
+        }
+
+        function initMap() {
+            var mapOptions = {
+                center: new naver.maps.LatLng(37.5665, 126.9780),
+                zoom: 15
+            };
+
+            var map = new naver.maps.Map('map', mapOptions);
         }
 
     </script>
@@ -157,10 +184,18 @@
                 <div class="horizontal-line"></div>  
             </div>
         </div>
+        <div class="map-info">
+            <h2>위치 정보</h2>
+        </div>
+        <div id="map" class="map"></div>      
     </main>
     <footer>
         <p>하우스헌터</p>
         <p>고객센터 02-111-2222</p>
     </footer>
+
+    <script>
+        initMap();
+    </script>
 </body>
 </html>

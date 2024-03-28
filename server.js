@@ -66,7 +66,9 @@ app.get('/loaduser', (req, res) => {
         res.status(401).json({ message: '로그인되지 않은 사용자' });
     }
 });
-
+app.get('/roomdetail', (req, res) => {
+    res.render('roomdetail', { naverMapAPIClientID: process.env.REACT_APP_API_CLIENT_ID });
+});
 app.get('/map', (req, res) => {
     res.render('map', { naverMapAPIClientID: process.env.REACT_APP_API_CLIENT_ID });
 });

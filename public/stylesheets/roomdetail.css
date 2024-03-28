@@ -171,6 +171,29 @@ footer p {
     margin: 0 auto;
 }
 
+.map-detail{
+
+}
+
+.map {
+    width: 1125px; 
+    height: 600px; 
+    margin: 5px auto 50px auto;
+    box-sizing: border-box;
+}
+
+.map-info{
+    display: flex;
+    align-items: left; /* 내부 요소들을 세로 중앙 정렬합니다. */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 200px;
+    margin-right: 50px;
+    box-sizing: border-box;
+    width: 1125px; 
+    height: 30px; /* 높이를 100px로 고정합니다. */
+}
+
 /* 미디어 쿼리 */
 @media screen and (max-width: 768px) {
     /* 화면 너비가 768px 이하일 때의 스타일 */
