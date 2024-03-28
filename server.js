@@ -49,6 +49,10 @@ app.get('/contents', (req, res) => {
     res.render('contents');
 });
 
+app.get('/roomdetail', (req, res) => {
+    res.render('roomdetail');
+});
+
 app.get('/help', (req, res) => {
     res.render('help');
 });
