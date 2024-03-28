@@ -1,40 +1,7 @@
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Black Han Sans", sans-serif;
     margin: 0;
     padding: 0;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-header h1 {
-    font-size: 32px;
-    margin: 0;
-    color: #333; /* 헤더 텍스트 색상 */
-}
-
-.logo img {
-    height: 50px; /* 로고 이미지 높이 조정 */
-}
-
-.nav {
-    display: flex;
-    align-items: center;
-}
-
-.nav a {
-    margin-left: 20px;
-    text-decoration: none;
-    color: #666; /* 내비게이션 링크 색상 */
-    font-weight: bold;
-    transition: color 0.3s ease; /* 부드러운 색상 전환 효과 */
-}
-
-.nav a:hover {
-    color: #000; /* 호버 시 링크 색상 변경 */
 }
 
 .content {
@@ -184,8 +151,7 @@ header h1 {
 
 .horizontal-line {
     border-top: 2px solid #000; /* 선의 두께와 색상을 설정합니다. */
-    margin-left: 50px;
-    margin-top: 30px;
+    margin: 30px 0 20px 50px;
 }
 
 

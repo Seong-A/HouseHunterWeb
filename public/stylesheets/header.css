@@ -19,13 +19,13 @@ header {
 }
 
 .logo{
-    margin:40px 0 20px 60px;
+    margin:15px 0 15px 60px;
     float:left;
 }
 
 .nav{
     float:right;
-    margin:60px 60px 20px 0;
+    margin:45px 60px 0 0;
 }
 
 .nav > ul {
