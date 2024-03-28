@@ -1,0 +1,123 @@
+main {
+    width:100%;
+    height: 800px;
+    overflow: hidden;
+}
+
+.mypage_nav {
+    float: left;
+    margin: 80px 0 0 80px;  
+}
+
+.mypage_text {
+    font-family: "Black Han Sans", sans-serif;
+    font-size: 30px;
+    color: black;
+    display: block;
+    padding: 0 30px 20px 0;
+    margin-bottom: 50px;
+    border-bottom: 1px solid #c9c9c9;
+}
+
+.mypage_nav > ul {
+    display: block;
+}
+
+.mypage_nav > ul > li{
+    margin-bottom: 30px;
+}
+
+.mypage_nav > ul > li:last-child{
+    margin-bottom: 0;
+}
+
+.mypage_nav > ul > li > a{
+    font-family: "Black Han Sans", sans-serif;
+    font-size: 20px;
+    color: black;
+}
+
+.mypage_nav > ul > li > button {
+    font-family: "Black Han Sans", sans-serif;
+    font-size: 20px;
+    color: black; 
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+#userinfo-btn {
+    color: #EA3945;
+}
+
+.userinfo-container {
+    width: 550px;
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    margin: 80px auto 0 auto;
+}
+
+.userinfo-title {
+    margin-bottom: 25px;
+    color: #EA3945;
+    text-align: center;
+    font-size: 30px;
+    font-family: "Black Han Sans", sans-serif;
+}
+
+.form-field {
+    margin-bottom: 30px;
+    font-weight: bold;
+    position: relative;
+}
+
+.field-label {
+    font-family: "Black Han Sans", sans-serif;
+}
+
+.id, .password, .name {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #000;
+    border-radius: 0;
+    color: #000000;
+    font-family: "Black Han Sans", sans-serif;
+    font-size: 15px;
+    outline: none;
+    padding: 5px 0;
+    width: 98%;
+    height: auto;
+}
+
+.phone {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #000000;
+    border-radius: 0;
+    color: #000000;
+    font-family: "Black Han Sans", sans-serif;
+    font-size: 15px;
+    outline: none;
+    padding: 5px 0;
+    width: 27%;
+    height: auto;
+}
+
+.update {
+    margin-top: 25px;
+    margin-bottom: 150px;
+    background-color: transparent;
+    border: none;
+    border: 2px solid #EA3945;
+    border-radius: 0;
+    color: #EA3945;
+    font-weight: bold;
+    font-family: 'Object Sans','Noto Sans KR',sans-serif;
+    font-size: 15px;
+    outline: none;
+    padding: 10px 0;
+    width: 98%;
+    height: auto;
+}
+

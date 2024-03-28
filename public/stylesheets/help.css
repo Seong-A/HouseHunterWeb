@@ -39,10 +39,6 @@ main {
     color: black;
 }
 
-#help-btn {
-    color: #EA3945;
-}
-
 .mypage_nav > ul > li > button {
     font-family: "Black Han Sans", sans-serif;
     font-size: 20px;
@@ -50,6 +46,10 @@ main {
     border: none;
     background-color: white;
     cursor: pointer;
+}
+
+#help-btn {
+    color: #EA3945;
 }
 
 .help-container {
@@ -97,8 +97,8 @@ main {
 
 .help_btn {
     display: flex;
-    width: 360px;
-    margin: 30px auto 0 auto;
+    width: 340px;
+    margin: 20px auto;
 }
 
 .button {
@@ -108,14 +108,14 @@ main {
     width: 150px;
     height: 50px;
     font-size: 15px;
-    margin-right: 20px;
+    margin: 0 10px;
     border: 2px solid #EA3945;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .help_text2 {
-    margin: 40px auto 0 auto;
+    margin: 10px auto 0 auto;
 }
 
 .help_text2 > p {

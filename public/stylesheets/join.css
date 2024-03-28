@@ -8,6 +8,7 @@
 .join-title {
     margin-top: 30px;
     margin-bottom: 30px;
+    color: #EA3945;
     text-align: center;
     font-size: 25px;
     font-family: "Black Han Sans", sans-serif;
@@ -15,6 +16,7 @@
 
 .form-field {
     margin-bottom: 30px;
+    font-weight: bold;
     position: relative;
 }
 
@@ -28,10 +30,10 @@
     border-bottom: 1px solid #000;
     border-radius: 0;
     color: #000000;
-    font-family: 'Object Sans','Noto Sans KR',sans-serif;
+    font-family: "Black Han Sans", sans-serif;
     font-size: 15px;
     outline: none;
-    padding: 15px 0;
+    padding: 10px 0;
     width: 97%;
     height: auto;
 }
@@ -42,7 +44,7 @@
     border-bottom: 1px solid #000000;
     border-radius: 0;
     color: #000000;
-    font-family: 'Object Sans','Noto Sans KR',sans-serif;
+    font-family: "Black Han Sans", sans-serif;
     font-size: 15px;
     outline: none;
     padding: 15px 0;
@@ -55,9 +57,10 @@
     margin-bottom: 150px;
     background-color: transparent;
     border: none;
-    border: 1px solid #000000;
+    border: 2px solid #EA3945;
     border-radius: 0;
-    color: #000000;
+    color: #EA3945;
+    font-weight: bold;
     font-family: 'Object Sans','Noto Sans KR',sans-serif;
     font-size: 15px;
     outline: none;

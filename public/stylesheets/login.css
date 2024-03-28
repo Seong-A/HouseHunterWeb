@@ -8,6 +8,7 @@
 .login-title {
     margin-top: 30px;
     margin-bottom: 30px;
+    color: #EA3945;
     text-align: center;
     font-size: 25px;
     font-family: "Black Han Sans", sans-serif;
@@ -28,35 +29,37 @@
     font-size: 15px;
     outline: none;
     padding: 15px 0;
-    width: 97%;
+    width: 100%;
     height: auto;
 }
 
 .login {
     background-color: transparent;
     border: none;
-    border: 1px solid #000000;
+    border: 2px solid #EA3945;
     border-radius: 0;
-    color: #000000;
-    font-family: 'Object Sans','Noto Sans KR',sans-serif;
+    color: #EA3945;
+    font-weight: bold;
+    font-family: "Black Han Sans", sans-serif;
     font-size: 15px;
     outline: none;
     padding: 15px 0;
-    width: 97%;
+    width: 100%;
     height: auto;
 }
 
 .join {
     background-color: transparent;
     border: none;
-    border: 1px solid #000000;
+    border: 2px solid #EA3945;
     border-radius: 0;
-    color: #000000;
-    font-family: 'Object Sans','Noto Sans KR',sans-serif;
+    color: #EA3945;
+    font-weight: bold;
+    font-family: "Black Han Sans", sans-serif;
     font-size: 15px;
     outline: none;
     padding: 15px 0;
-    width: 97%;
+    width: 100%;
     height: auto;
     margin-top: 30px;
 }

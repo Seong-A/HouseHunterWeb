@@ -15,7 +15,7 @@
             <ul>
                 <li><a href="#">관심목록</a></li>
                 <li><a href="/map">지도</a></li>
-                <li><a href="/mypage">마이페이지</a></li>
+                <li><a class="mypage-button" href="/mypage">마이페이지</a></li>
             </ul>
             <button class="login-button">로그인</button>
             <span class="user-name" style="display: none;"></span>
@@ -26,6 +26,7 @@
         document.addEventListener('DOMContentLoaded', async function() {
             const loginButton = document.querySelector('.login-button');
             const userNameDisplay = document.querySelector('.user-name');
+            const mypageButton = document.querySelector('.mypage-button');
 
             async function updateUI() {
                 try {
@@ -36,9 +37,11 @@
                         loginButton.style.display = 'none'; 
                         userNameDisplay.textContent = userData.userName; 
                         userNameDisplay.style.display = 'inline-block';
+                        mypageButton.href = '/mypage';
                     } else {
                         loginButton.style.display = 'inline-block'; 
                         userNameDisplay.style.display = 'none'; 
+                        mypageButton.href = '/login';
                     }
                 } catch (error) {
                     console.error('Error:', error);
