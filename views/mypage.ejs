@@ -11,15 +11,20 @@
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('header-container').innerHTML = data;
+                    const loginButton = document.getElementById('login-button');
+                    if (loginButton) {
+                        loginButton.addEventListener('click', loginUser);
+                    }
+                    updateUI();
                 })
                 .catch(error => console.error('Error:', error));
-
-            document.getElementById('login-button').addEventListener('click', loginUser);
         }
 
         window.onload = loadHeader;
 
         document.addEventListener('DOMContentLoaded', function() {
+            loadUser();
+
             const logoutButton = document.getElementById('logout-button');
             logoutButton.addEventListener('click', function() {
                 logoutUser();
@@ -38,6 +43,48 @@
                 }
             })
             .catch(error => console.error('Error:', error));
+        }
+        
+        async function loadUser() {
+            try {
+                const response = await fetch('/check-login'); 
+                const result = await response.json();
+
+                if (result.isLoggedIn) { 
+                    const response = await fetch('/loaduser'); 
+                    const userData = await response.json();
+
+                    if (userData.userName) {
+                        const userNameElement = document.getElementById('userName');
+                        userNameElement.textContent = userData.userName; 
+                    } else {
+                        console.error('사용자 정보가 없습니다.');
+                    }
+                } else {
+                    console.error('사용자가 로그인하지 않았습니다.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        
+        async function updateUI() {
+            try {
+                const response = await fetch('/check-login');
+                const userData = await response.json();
+                const userNameDisplay = document.querySelector('.user-name');
+
+                if (userData.isLoggedIn) {
+                    const loginButton = document.querySelector('.login-button');
+                    loginButton.style.display = 'none'; 
+                    userNameDisplay.textContent = userData.userName; 
+                    userNameDisplay.style.display = 'inline-block';
+                } else {
+                    userNameDisplay.style.display = 'none'; 
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
     </script>
 </head>
@@ -59,7 +106,7 @@
             <div class="mypage">
                 <img src="/image/user.png">
                 <div class="mypage_layout">
-                    <h2>00</h2>
+                    <h2 id="userName">{{ userName }}</h2>
                     <h2>님의 마이페이지</h2>
                 </div>
             </div>
@@ -76,6 +123,5 @@
         <p>고객센터 02-111-2222</p>
     </footer>
 
-    <script src="main.js"></script> <!-- main.js 파일 추가 -->
 </body>
 </html>

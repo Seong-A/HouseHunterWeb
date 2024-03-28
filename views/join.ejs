@@ -11,6 +11,9 @@
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('header-container').innerHTML = data;
+                    document.querySelector('.login-button').addEventListener('click', function() {
+                        checkLogin(); 
+                    });
                 })
                 .catch(error => console.error('Error:', error));
 
@@ -18,6 +21,21 @@
         }
 
         window.onload = loadHeader;
+
+        async function checkLogin() {
+            try {
+                const response = await fetch('/check-login');
+                const data = await response.json();
+
+                if (data.isLoggedIn) {
+                    window.location.href = '/mypage';
+                } else {
+                    window.location.href = '/login';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
         
         function registerUser() {
             var id = document.getElementById('id').value;

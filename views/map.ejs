@@ -11,11 +11,49 @@
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('header-container').innerHTML = data;
+                    document.querySelector('.login-button').addEventListener('click', function() {
+                        checkLogin(); 
+                    });
+                    updateUI();
                 })
                 .catch(error => console.error('Error:', error));
         }
         
         window.onload = loadHeader;
+
+        async function checkLogin() {
+            try {
+                const response = await fetch('/check-login');
+                const data = await response.json();
+
+                if (data.isLoggedIn) {
+                    window.location.href = '/mypage';
+                } else {
+                    window.location.href = '/login';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function updateUI() {
+            try {
+                const response = await fetch('/check-login');
+                const userData = await response.json();
+                const userNameDisplay = document.querySelector('.user-name');
+
+                if (userData.isLoggedIn) {
+                    const loginButton = document.querySelector('.login-button');
+                    loginButton.style.display = 'none'; 
+                    userNameDisplay.textContent = userData.userName; 
+                    userNameDisplay.style.display = 'inline-block';
+                } else {
+                    userNameDisplay.style.display = 'none'; 
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
 
         // 필터 버튼 클릭 시 필터 내용을 표시하는 함수
         function showFilterContent(filterType) {

@@ -54,3 +54,14 @@ header {
     border-radius: 5px;
     cursor: pointer;
 }
+
+.user-name {
+    font-family: "Black Han Sans", sans-serif;
+    display: none;
+    background-color: white;
+    color: #EA3945;
+    padding: 10px 15px;
+    font-size: 20px;
+    border: 2px solid #EA3945;
+    border-radius: 5px;
+}

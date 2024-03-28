@@ -17,16 +17,40 @@
                 <li><a href="/map">지도</a></li>
                 <li><a href="/mypage">마이페이지</a></li>
             </ul>
-            <a class="login-button">로그인</a>
+            <button class="login-button">로그인</button>
+            <span class="user-name" style="display: none;"></span>
         </div>
     </header>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             const loginButton = document.querySelector('.login-button');
+            const userNameDisplay = document.querySelector('.user-name');
+
+            async function updateUI() {
+                try {
+                    const response = await fetch('/check-login');
+                    const userData = await response.json();
+
+                    if (userData.isLoggedIn) {
+                        loginButton.style.display = 'none'; 
+                        userNameDisplay.textContent = userData.userName; 
+                        userNameDisplay.style.display = 'inline-block';
+                    } else {
+                        loginButton.style.display = 'inline-block'; 
+                        userNameDisplay.style.display = 'none'; 
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+
+
             loginButton.addEventListener('click', function() {
                 checkLogin(); 
             });
+
+            await updateUI(); 
         });
 
         async function checkLogin() {
@@ -43,6 +67,7 @@
                 console.error('Error:', error);
             }
         }
+
 
     </script>
     

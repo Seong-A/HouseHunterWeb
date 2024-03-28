@@ -38,8 +38,39 @@ app.get('/header', (req, res) => {
 });
 
 app.get('/mypage', (req, res) => {
-    res.render('mypage');
+    if (req.session.isLoggedIn) {
+        res.render('mypage');
+    } else {
+        res.redirect('/login');
+    }
 });
+
+
+app.get('/loaduser', (req, res) => {
+    if (req.session.isLoggedIn) {
+        const userId = req.session.userId; 
+        const query = 'SELECT name FROM user WHERE id = ?';
+
+        connection.query(query, [userId], (error, results, fields) => {
+            if (error) {
+                console.error('사용자 정보 가져오기 오류:', error);
+                res.status(500).json({ success: false, message: '내부 서버 오류' });
+            } else {
+                if (results.length > 0) {
+                    const userName = results[0].name;
+                    res.json({ userName }); 
+                } else {
+                    res.status(404).json({ message: '사용자 정보를 찾을 수 없음' });
+                }
+            }
+        });
+    } else {
+        res.status(401).json({ message: '로그인되지 않은 사용자' });
+    }
+});
+
+
+
 
 app.get('/map', (req, res) => {
     res.render('map', { naverMapAPIClientID: process.env.REACT_APP_API_CLIENT_ID });
@@ -67,11 +98,27 @@ app.get('/login', (req, res) => {
 
 app.get('/check-login', (req, res) => {
     if (req.session.isLoggedIn) {
-        res.json({ isLoggedIn: true, userId: req.session.userId });
+        const userId = req.session.userId;
+        const query = 'SELECT name FROM user WHERE id = ?';
+
+        connection.query(query, [userId], (error, results, fields) => {
+            if (error) {
+                console.error('사용자 정보 가져오기 오류:', error);
+                res.status(500).json({ isLoggedIn: false });
+            } else {
+                if (results.length > 0) {
+                    const userName = results[0].name;
+                    res.json({ isLoggedIn: true, userName: userName });
+                } else {
+                    res.json({ isLoggedIn: false });
+                }
+            }
+        });
     } else {
         res.json({ isLoggedIn: false });
     }
 });
+
 
 app.post('/register', (req, res) => {
     const userData = req.body;
