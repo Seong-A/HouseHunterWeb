@@ -11,7 +11,6 @@ const port = 5500;
 const connection = mysqlModule.getPool();
 app.use(bodyParser.json());
 
-
 const naverMapAPIClientID = process.env.REACT_APP_API_CLIENT_ID;
 
 app.use(session({
@@ -45,7 +44,6 @@ app.get('/mypage', (req, res) => {
     }
 });
 
-
 app.get('/loaduser', (req, res) => {
     if (req.session.isLoggedIn) {
         const userId = req.session.userId; 
@@ -71,6 +69,19 @@ app.get('/loaduser', (req, res) => {
 
 app.get('/map', (req, res) => {
     res.render('map', { naverMapAPIClientID: process.env.REACT_APP_API_CLIENT_ID });
+});
+
+app.get('/get-locations-from-database', (req, res) => {
+    const query = 'SELECT latitude, longitude FROM house';
+
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.error('위치 정보 가져오기 오류:', error);
+            res.status(500).json({ success: false, message: '내부 서버 오류' });
+        } else {
+            res.json(results);
+        }
+    });
 });
 
 app.get('/contents', (req, res) => {

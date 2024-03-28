@@ -41,10 +41,29 @@
 #applyRoomTypesButton {
     background-color: #EA3945;
     color: white;
+    display: none;
+}
+
+#applyDepositButton {
+    background-color: #EA3945;
+    color: white;
+    display: none;
+}
+
+#applyMonthlyButton {
+    background-color: #EA3945;
+    color: white;
+    display: none;
+}
+
+#applyManagementButton {
+    background-color: #EA3945;
+    color: white;
+    display: none;
 }
 
 .filter-content {
-    /* display: none; */
+    display: none;
     margin: 10px 0 0 10px;
     font-family: "Black Han Sans", sans-serif;
 }
@@ -59,3 +78,29 @@
     margin: 10px 0 10px 0;
 }
 
+.filter-content.depositfilter-content input {
+    width: 75%;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.filter-content.monthlyfilter-content input {
+    width: 75%;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.filter-content.managementfilter-content input {
+    width: 75%;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
