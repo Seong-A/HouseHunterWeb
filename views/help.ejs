@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HouseHunter Mypage</title>
-    <link rel="stylesheet" href="/stylesheets/mypage.css">
+    <title>HouseHunter Help</title>
+    <link rel="stylesheet" href="/stylesheets/help.css">
     <script>
         function loadHeader() {
             fetch('/header') 
@@ -48,27 +48,29 @@
         <div class="mypage_nav">
             <a class="mypage_text" href="mypage">마이페이지</a>
             <ul>
-                <li><a href="#">회원정보수정</a></li>
-                <li><a href="contents">추천 콘텐츠</a></li>
-                <li><a href="help">고객센터</a></li>
+                <li><a id="userinfo-btn" href="#">회원정보수정</a></li>
+                <li><a id="contents-btn" href="contents">추천 콘텐츠</a></li>
+                <li><a id="help-btn" href="help">고객센터</a></li>
                 <li><button id="logout-button">로그아웃</button></li>
             </ul>
         </div>
 
-        <div class="mypage-container">
-            <div class="mypage">
-                <img src="/image/user.png">
-                <div class="mypage_layout">
-                    <h2>00</h2>
-                    <h2>님의 마이페이지</h2>
-                </div>
+        <div class="help-container">
+            <div class="help_text1">
+                <h1>고객센터</h1>
+                <p id="help1">도움이 필요하신가요?</p>
+                <p id="help2">평일 09:00 - 18:00</p>
+                <p id="help3">점심시간 12:00 - 13:00 / 주말 공휴일 휴무</p>
             </div>
-            <div class="mypage_btn">
-                <button class="button">최근 본 집</button>
-                <button class="button">찜한 집</button>
+            <div class="help_btn">
+                <button class="button">📞 전화 상담하기</button>
+                <button class="button">📝 문의 남기기</button>
+            </div>
+            <div class="help_text2">
+                <p>2018년 10월 18일부터 산업안전보건법 제 26조의2제1항에 따라 고객응대근로자에게 폭언을 하는 것이 금지됩니다.</p>
             </div>
         </div>
-        
+
     </main>
 
     <footer>

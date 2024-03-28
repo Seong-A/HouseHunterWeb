@@ -49,6 +49,10 @@ app.get('/contents', (req, res) => {
     res.render('contents');
 });
 
+app.get('/help', (req, res) => {
+    res.render('help');
+});
+
 app.get('/join', (req, res) => {
     res.render('join');
 });
@@ -113,5 +117,9 @@ app.post('/set-session', (req, res) => {
     res.json({ success: true });
 });
 
+app.post('/logout', (req, res) => {
+    req.session.destroy(); 
+    res.redirect('/'); 
+});
 
 module.exports = app;

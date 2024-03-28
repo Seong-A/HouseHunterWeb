@@ -14,7 +14,7 @@ main {
 .mypage_text {
     font-family: "Black Han Sans", sans-serif;
     font-size: 30px;
-    color: black;
+    color: #EA3945;
     display: block;
     padding: 0 30px 20px 0;
     margin-bottom: 50px;
@@ -39,17 +39,31 @@ main {
     color: black;
 }
 
-.mypage {
-    float: right;
+.mypage_nav > ul > li > button {
+    font-family: "Black Han Sans", sans-serif;
+    font-size: 20px;
+    color: black; 
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.mypage-container {
     display: flex;
-    align-items: center;
+    flex-direction: column; 
+    align-items: center; 
+}
+
+.mypage {
     width: 800px;
     height: 220px;
+    display: flex;
+    align-items: center; 
     background-color: #f2f2f2;
     border: 1px solid #c9c9c9;
     border-radius: 5px;
     padding: 20px 50px 20px 50px;
-    margin: 80px 200px 0 0;
+    margin: 80px auto 0 auto;
     box-sizing: border-box;
 }
 
@@ -72,9 +86,7 @@ main {
 }
 
 .mypage_btn {
-    float: right;
-    display: flex;
-    margin: 20px 180px 0 0;
+    margin: 20px auto 0 auto;
 }
 
 .button {
@@ -84,7 +96,7 @@ main {
     width: 390px;
     height: 80px;
     font-size: 25px;
-    margin-right: 20px;
+    margin: 7px;
     border: 2px solid #EA3945;
     border-radius: 5px;
     cursor: pointer;

@@ -39,38 +39,7 @@ main {
     color: black;
 }
 
-.contents {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    margin: 80px auto 0 auto; 
-}
-
-.contents > h1 {
-    text-align: center;
-    font-family: "Black Han Sans", sans-serif;
-    font-size: 30px;
-    margin-bottom: 50px;
-    color: #EA3945;
-}
-
-.contents > ul {
-    display: block;
-}
-
-.contents > ul > li {
-    padding: 10px; 
-    border-bottom: 1px solid #c9c9c9;
-    overflow: hidden; 
-}
-
-.contents > ul > li > a{
-    font-family: "Black Han Sans", sans-serif;
-    font-size: 20px;
-    color: black;
-}
-
-#contents-btn {
+#help-btn {
     color: #EA3945;
 }
 
@@ -83,10 +52,79 @@ main {
     cursor: pointer;
 }
 
-.contents img {
-    width: 40px;
-    height: auto; 
-    margin-right: 30px;
+.help-container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+}
+
+.help_text1 {
+    width: 400px;
+    margin: 80px auto 0 auto;
+}
+
+.help_text1 > h1 {
+    text-align: center;
+    font-family: "Black Han Sans", sans-serif;
+    font-size: 30px;
+    margin-bottom: 50px;
+    color: #EA3945;
+}
+
+.help_text1 > #help1 {
+    display: block;
+    font-family: "Black Han Sans", sans-serif;
+    margin-bottom: 10px;
+    padding:0 0 20px 5px;
+    border-bottom: 2px solid #EA3945;
+}
+
+.help_text1 > #help2 {
+    display: block;
+    font-family: "Black Han Sans", sans-serif;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    padding:10px 0 5px 5px;
+}
+
+.help_text1 > #help3 {
+    display: block;
+    font-family: "Black Han Sans", sans-serif;
+    margin-bottom: 10px;
+    padding:0 0 10px 5px;
+}
+
+.help_btn {
+    display: flex;
+    width: 360px;
+    margin: 30px auto 0 auto;
+}
+
+.button {
+    font-family: "Black Han Sans", sans-serif;
+    background-color: white;
+    color: #EA3945;
+    width: 150px;
+    height: 50px;
+    font-size: 15px;
+    margin-right: 20px;
+    border: 2px solid #EA3945;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.help_text2 {
+    margin: 40px auto 0 auto;
+}
+
+.help_text2 > p {
+    display: block;
+    font-family: "Black Han Sans", sans-serif;
+    margin-bottom: 10px;
+    font-size: 12px;
+    text-align: center;
+    color: #c9c9c9;
 }
 
 /* 푸터 스타일 */
