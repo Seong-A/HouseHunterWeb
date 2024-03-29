@@ -36,6 +36,130 @@ app.get('/header', (req, res) => {
     res.render('header');
 });
 
+app.get('/room1', (req, res) => {
+    res.render('room1');
+});
+
+app.get('/room1_info', (req, res) => {
+    const query = "SELECT photo1, photo2, monthly_money, fix_money, locate, rtype, floor, management_money FROM house WHERE rtype = '원룸'";
+  
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.error('정보 가져오기 오류:', error);
+            res.status(500).json({ error: '내부 서버 오류' });
+        } else {
+            if (results.length > 0) {
+                const room1Info = results.map(result => ({
+                    photo1: result.photo1,
+                    photo2: result.photo2,
+                    fix_money: result.fix_money,
+                    monthly_money: result.monthly_money,
+                    management_money: result.management_money,
+                    locate: result.locate,
+                    rtype: result.rtype,
+                    floor: result.floor
+                }));
+                res.json(room1Info);
+            } else {
+                res.status(404).json({ error: '사용자 정보를 찾을 수 없음' });
+            }
+        }
+    });
+});
+
+app.get('/room2', (req, res) => {
+    res.render('room2');
+});
+
+app.get('/room2_info', (req, res) => {
+    const query = "SELECT photo1, photo2, monthly_money, fix_money, locate, rtype, floor, management_money FROM house WHERE rtype = '투ㆍ쓰리룸'";
+  
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.error('정보 가져오기 오류:', error);
+            res.status(500).json({ error: '내부 서버 오류' });
+        } else {
+            if (results.length > 0) {
+                const room2Info = results.map(result => ({
+                    photo1: result.photo1,
+                    photo2: result.photo2,
+                    fix_money: result.fix_money,
+                    monthly_money: result.monthly_money,
+                    management_money: result.management_money,
+                    locate: result.locate,
+                    rtype: result.rtype,
+                    floor: result.floor
+                }));
+                res.json(room2Info);
+            } else {
+                res.status(404).json({ error: '사용자 정보를 찾을 수 없음' });
+            }
+        }
+    });
+});
+
+app.get('/officetel', (req, res) => {
+    res.render('officetel');
+});
+
+app.get('/officetel_info', (req, res) => {
+    const query = "SELECT photo1, photo2, monthly_money, fix_money, locate, rtype, floor, management_money FROM house WHERE rtype = '오피스텔'";
+  
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.error('정보 가져오기 오류:', error);
+            res.status(500).json({ error: '내부 서버 오류' });
+        } else {
+            if (results.length > 0) {
+                const officetelInfo = results.map(result => ({
+                    photo1: result.photo1,
+                    photo2: result.photo2,
+                    fix_money: result.fix_money,
+                    monthly_money: result.monthly_money,
+                    management_money: result.management_money,
+                    locate: result.locate,
+                    rtype: result.rtype,
+                    floor: result.floor
+                }));
+                res.json(officetelInfo);
+            } else {
+                res.status(404).json({ error: '사용자 정보를 찾을 수 없음' });
+            }
+        }
+    });
+});
+
+app.get('/apartment', (req, res) => {
+    res.render('apartment');
+});
+
+app.get('/apartment_info', (req, res) => {
+    const query = "SELECT photo1, photo2, monthly_money, fix_money, locate, rtype, floor, management_money FROM house WHERE rtype = '아파트'";
+  
+    connection.query(query, (error, results, fields) => {
+        if (error) {
+            console.error('정보 가져오기 오류:', error);
+            res.status(500).json({ error: '내부 서버 오류' });
+        } else {
+            if (results.length > 0) {
+                const apartmentInfo = results.map(result => ({
+                    photo1: result.photo1,
+                    photo2: result.photo2,
+                    fix_money: result.fix_money,
+                    monthly_money: result.monthly_money,
+                    management_money: result.management_money,
+                    locate: result.locate,
+                    rtype: result.rtype,
+                    floor: result.floor
+                }));
+                res.json(apartmentInfo);
+            } else {
+                res.status(404).json({ error: '사용자 정보를 찾을 수 없음' });
+            }
+        }
+    });
+});
+
 app.get('/mypage', (req, res) => {
     if (req.session.isLoggedIn) {
         res.render('mypage');
