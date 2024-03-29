@@ -91,43 +91,45 @@
     <main>
         <div class="content">
             <div class="image-gallery">
-                <img src="image1.jpg" alt="Image 1">
-                <img src="image2.jpg" alt="Image 2">
+                <img id=photo1 alt="Image 1">
+                <img id=photo2 alt="Image 2">
             </div>
         </div>
 
         <div class="room">
             <div class="room-container">
                 <div class="room-title">
-                    <h2>방유형 보증금/월세</h2> 
+                    <h2 id="rtype">방유형</h2> 
+                    <h2 id="fix_money"> 보증금</h2>
+                    <h2 id="monthly_money">/월세</h2>
                 </div>
                 <div class="room-info">
                     <img src="image/type.png" alt="Room Type">
-                    <p>Room Type : </p>
+                    <p>방 종류 : </p>
                     &nbsp;&nbsp;
-                    <p>  type</p>
+                    <p id="rtype">  type</p>
                 </div>
                 <div class="room-info">
                     <img src="image/size.png" alt="Room Size">
-                    <p>Room Size : </p>  
+                    <p>방 사이즈 : </p>  
                     &nbsp;&nbsp;
-                    <p>  Size</p>
+                    <p id="size">  Size</p>
                 </div>
                 <div class="room-info">
                     <img src="image/elevator.png" alt="Elevator">
-                    <p>  Elevator :</p>
+                    <p>엘리베이터  :</p>
                     &nbsp;&nbsp;
-                    <p>yes</p>
+                    <p id="elevator">yes</p>
                 </div>
                 <div class="room-info">
                     <img src="image/money.png" alt="money">
-                    <p>  Money :</p>
+                    <p>관리비 :</p>
                     &nbsp;&nbsp;
-                    <p>money</p>
+                    <p id="management_money">money</p>
                 </div>
                 <div class="room-info">
                     <button id="like-button" class="like-button"></button>
-                    <div class="phone">전화번호</div>
+                    <div class="phone" id="phone">전화번호</div>
                 </div>
             </div>
     
@@ -139,19 +141,19 @@
                     <div class="room-price">
                         <p>월세</p>
                         &nbsp;&nbsp;
-                        <p2>0원</p2>
+                        <p2 id="monthly_money">0원</p2>
                     </div>
     
                     <div class="room-price">
                         <p>관리비</p>
                         &nbsp;&nbsp;
-                        <p2>0원</p2>
+                        <p2 id="management_money">0원</p2>
                     </div>
     
                     <div class="room-price">
                         <p>주차가능여부</p>
                         &nbsp;&nbsp;
-                        <p2>가능</p2>
+                        <p2 id="parking">가능</p2>
                     </div>
                 </div>
                 <div class="horizontal-line"></div>  
@@ -162,39 +164,39 @@
                     <div class="room-price">
                         <p>방종류</p>
                         &nbsp;&nbsp;
-                        <p2>00</p2>
+                        <p2 id="rtype">00</p2>
                     </div>
     
                     <div class="room-price">
                         <p>해당층/건물층</p>
                         &nbsp;&nbsp;
-                        <p2>0층/0층</p2>
+                        <p2 id="floor">0층/0층</p2>
                     </div>
     
                     <div class="room-price">
                         <p>방 수/ 욕실 수</p>
                         &nbsp;&nbsp;
-                        <p2>0개/ 0개</p2>
+                        <p2 id="room_bath">0개/ 0개</p2>
                     </div>
                     <div class="room-price">
                         <p>앨레베이터</p>
                         &nbsp;&nbsp;
-                        <p2>있음</p2>
+                        <p2 id="elevator">있음</p2>
                     </div>
                     <div class="room-price">
                         <p>총 세대 수</p>
                         &nbsp;&nbsp;
-                        <p2>00세대</p2>
+                        <p2 id="total_room">00세대</p2>
                     </div>
                     <div class="room-price">
                         <p>총 주차대수</p>
                         &nbsp;&nbsp;
-                        <p2>0개</p2>
+                        <p2 id="total_parking">0개</p2>
                     </div>
                     <div class="room-price">
                         <p>입주가능일</p>
                         &nbsp;&nbsp;
-                        <p2>즉시입주</p2>
+                        <p2 id="date">즉시입주</p2>
                     </div>
                 </div>
                 <div class="horizontal-line"></div>  
