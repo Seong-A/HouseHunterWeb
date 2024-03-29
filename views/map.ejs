@@ -27,8 +27,6 @@
             registerMonthlyFilterHandlers();
             registerManagementFilterHandlers();
 
-            const selectedRoomTypes = Array.from(document.querySelectorAll('.roomfilter-content input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
-            displayFilteredMarkers(selectedRoomTypes);
         };
 
         async function checkLogin() {
@@ -94,7 +92,12 @@
                         position: markerPosition,
                         map: map 
                     });
+                    marker.id = location.id;
                     markers.push(marker);
+
+                    naver.maps.Event.addListener(marker, 'click', function() {
+                        window.location.href = `/roomdetail?id=${marker.id}`;
+                    });
                 });
             } catch (error) {
                 console.error('Error:', error);
@@ -234,9 +237,18 @@
             });
 
             // 적용하기 버튼 누르면 항목들 사라짐
-            document.getElementById('applyDepositButton').addEventListener('click', function() {
-                const depositValue = document.getElementById('depositInput').value;
+            document.getElementById('applyDepositButton').addEventListener('click', async function() {
+                const depositValue = parseInt(document.getElementById('depositInput').value.replace(/[^0-9]/g, ''));
                 console.log('Deposit:', depositValue);
+
+                try {
+                    const response = await fetch(`/get-markers-by-deposit?deposit=${depositValue}`);
+                    const locationsData = await response.json();
+
+                    displayMarkers(locationsData);
+                } catch (error) {
+                    console.error('Error:', error);
+                }
 
                 const filterContent = document.querySelector('.filter-content.depositfilter-content');
                 const applyButton = document.getElementById('applyDepositButton');
@@ -244,8 +256,8 @@
                 applyButton.style.display = 'none';
 
                 document.getElementById('deposittype').textContent = "보증금 : " + depositValue;
-
             });
+
 
             document.getElementById('depositInput').addEventListener('input', function() {
                 let depositValue = parseInt(this.value.replace(/[^0-9]/g, ''));
@@ -278,9 +290,18 @@
             });
 
             // 적용하기 버튼 누르면 항목들 사라짐
-            document.getElementById('applyMonthlyButton').addEventListener('click', function() {
-                const monthlyValue = document.getElementById('monthlyInput').value;
+            document.getElementById('applyMonthlyButton').addEventListener('click', async function() {
+                const monthlyValue = parseInt(document.getElementById('monthlyInput').value.replace(/[^0-9]/g, ''));
                 console.log('Monthly:', monthlyValue);
+
+                try {
+                    const response = await fetch(`/get-markers-by-monthly?monthly=${monthlyValue}`);
+                    const locationsData = await response.json();
+
+                    displayMarkers(locationsData);
+                } catch (error) {
+                    console.error('Error:', error);
+                }
 
                 const filterContent = document.querySelector('.filter-content.monthlyfilter-content');
                 const applyButton = document.getElementById('applyMonthlyButton');
@@ -288,7 +309,6 @@
                 applyButton.style.display = 'none';
 
                 document.getElementById('monthlytype').textContent = "월세 : " + monthlyValue;
-
             });
 
             document.getElementById('monthlyInput').addEventListener('input', function() {
@@ -323,9 +343,18 @@
             });
 
             // 적용하기 버튼 누르면 항목들 사라짐
-            document.getElementById('applyManagementButton').addEventListener('click', function() {
-                const managementValue = document.getElementById('managementInput').value;
+            document.getElementById('applyManagementButton').addEventListener('click', async function() {
+                const managementValue = parseInt(document.getElementById('managementInput').value.replace(/[^0-9]/g, ''));
                 console.log('Management:', managementValue);
+
+                try {
+                    const response = await fetch(`/get-markers-by-management?management=${managementValue}`);
+                    const locationsData = await response.json();
+
+                    displayMarkers(locationsData);
+                } catch (error) {
+                    console.error('Error:', error);
+                }
 
                 const filterContent = document.querySelector('.filter-content.managementfilter-content');
                 const applyButton = document.getElementById('applyManagementButton');
@@ -333,7 +362,6 @@
                 applyButton.style.display = 'none';
 
                 document.getElementById('managementtype').textContent = "관리비 : " + managementValue;
-
             });
 
             document.getElementById('managementInput').addEventListener('input', function() {

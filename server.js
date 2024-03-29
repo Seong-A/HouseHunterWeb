@@ -198,15 +198,16 @@ app.get('/map', (req, res) => {
 });
 
 app.get('/get-all-markers', (req, res) => {
-    connection.query('SELECT latitude, longitude FROM house', (error, results, fields) => {
+    connection.query('SELECT id, latitude, longitude FROM house', (error, results, fields) => {
         if (error) {
-            console.error('Error fetching markers:', error);
-            res.status(500).json({ success: false, message: 'Internal server error' });
+            console.error('마커 정보 불러오기 실패 :', error);
+            res.status(500).json({ success: false, message: '내부 서버 오류' });
         } else {
             res.json(results);
         }
     });
 });
+
 
 app.get('/get-markers-by-roomtypes', (req, res) => {
     let selectedRoomTypes = req.query.roomTypes;
@@ -238,6 +239,51 @@ app.get('/get-markers-by-roomtypes', (req, res) => {
     connection.query(query, (error, results, fields) => {
         if (error) {
             console.error('마커 정보 가져오기 오류 :', error);
+            res.status(500).json({ success: false, message: '내부 서버 오류' });
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+app.get('/get-markers-by-deposit', (req, res) => {
+    const depositValue = req.query.deposit;
+
+    const query = 'SELECT latitude, longitude FROM house WHERE fix_money <= ?';
+
+    connection.query(query, [depositValue], (error, results, fields) => {
+        if (error) {
+            console.error('보증금 정보 가져오기 오류 :', error);
+            res.status(500).json({ success: false, message: '내부 서버 오류' });
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+app.get('/get-markers-by-monthly', (req, res) => {
+    const monthlyValue = req.query.monthly;
+
+    const query = 'SELECT latitude, longitude FROM house WHERE monthly_money <= ?';
+
+    connection.query(query, [monthlyValue], (error, results, fields) => {
+        if (error) {
+            console.error('월세 정보 가져오기 오류 :', error);
+            res.status(500).json({ success: false, message: '내부 서버 오류' });
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+app.get('/get-markers-by-management', (req, res) => {
+    const managementValue = req.query.management;
+
+    const query = 'SELECT latitude, longitude FROM house WHERE management_money <= ?';
+
+    connection.query(query, [managementValue], (error, results, fields) => {
+        if (error) {
+            console.error('관리비 정보 가져오기 오류 :', error);
             res.status(500).json({ success: false, message: '내부 서버 오류' });
         } else {
             res.json(results);
