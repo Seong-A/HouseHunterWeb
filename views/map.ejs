@@ -21,11 +21,14 @@
         
         window.onload = function() {
             loadHeader();
+            loadAllMarkers();
             registerRoomtypesHandlers();
             registerDepositFilterHandlers();
             registerMonthlyFilterHandlers();
             registerManagementFilterHandlers();
-            displayMarkersOnMap();
+
+            const selectedRoomTypes = Array.from(document.querySelectorAll('.roomfilter-content input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
+            displayFilteredMarkers(selectedRoomTypes);
         };
 
         async function checkLogin() {
@@ -62,6 +65,52 @@
             }
         }
 
+        async function loadAllMarkers() {
+            try {
+                const allLocationsData = await getAllMarkers();
+                displayMarkers(allLocationsData);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function displayMarkers(locationsData) {
+            try {
+                removeAllMarkers();
+
+                // 지도의 중심 좌표
+                const firstLocation = locationsData[0];
+                const mapCenter = new naver.maps.LatLng(firstLocation.latitude, firstLocation.longitude);
+
+                // 지도를 생성
+                const map = new naver.maps.Map(mapDiv, {
+                    center: mapCenter,
+                    zoom: 13 
+                });
+
+                locationsData.forEach(location => {
+                    const markerPosition = new naver.maps.LatLng(location.latitude, location.longitude);
+                    const marker = new naver.maps.Marker({
+                        position: markerPosition,
+                        map: map 
+                    });
+                    markers.push(marker);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function getAllMarkers() {
+            try {
+                const response = await fetch('/get-all-markers');
+                const locationsData = await response.json();
+                return locationsData;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
         function registerRoomtypesHandlers() {
             // 방유형 클릭하면 항목 나타남
             document.querySelector('.roomfilter').addEventListener('click', function() {
@@ -80,16 +129,14 @@
             // 항목 클릭하면 방유형에 선택한 내용 나타남
             document.querySelectorAll('.applyRoomTypesButton').forEach(function(button) {
                 button.addEventListener('click', function() {
-                    const selectedRoomTypes = document.querySelectorAll('.roomfilter-content input[type="checkbox"]:checked');
+                    const selectedRoomTypes = Array.from(document.querySelectorAll('.roomfilter-content input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
                     const selectedRoomTypesContainer = document.getElementById('selectedRoomTypes');
                     const roomTypeContainer = document.getElementById('roomtype');
 
                     selectedRoomTypesContainer.innerHTML = '';
                     roomTypeContainer.textContent = '';
 
-                    selectedRoomTypes.forEach(function(checkbox, index) {
-                        const roomType = checkbox.value;
-
+                    selectedRoomTypes.forEach(function(roomType, index) {
                         const pElement = document.createElement('p');
                         pElement.textContent = roomType;
                         selectedRoomTypesContainer.appendChild(pElement);
@@ -108,14 +155,67 @@
                         selectedRoomTypesContainer.style.display = 'none';
                     }
 
+                    displayFilteredMarkers(selectedRoomTypes.join(','));
+                    
                     // 적용하기 누르면 항목 사라짐
                     const filterContent = document.querySelector('.filter-content.roomfilter-content');
                     const applyButton = document.getElementById('applyRoomTypesButton');
                     filterContent.style.display = 'none';
                     applyButton.style.display = 'none';
+
                 });
             });
         }
+
+        async function displayFilteredMarkers(selectedRoomTypes) {
+            try {
+                const locationsData = await getFilteredMarkers(selectedRoomTypes);
+                removeAllMarkers();
+
+                // 지도의 중심 좌표
+                const firstLocation = locationsData[0];
+                const mapCenter = new naver.maps.LatLng(firstLocation.latitude, firstLocation.longitude);
+
+                // 지도를 생성
+                const map = new naver.maps.Map(mapDiv, {
+                    center: mapCenter, 
+                    zoom: 13 
+                });
+
+                locationsData.forEach(location => {
+                    const markerPosition = new naver.maps.LatLng(location.latitude, location.longitude);
+                    const marker = new naver.maps.Marker({
+                        position: markerPosition,
+                        map: map 
+                    });
+                    markers.push(marker);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function getFilteredMarkers(selectedRoomTypes) {
+            try {
+                const response = await fetch('/get-markers-by-roomtypes?roomTypes=' + encodeURIComponent(selectedRoomTypes));
+                const locationsData = await response.json();
+                return locationsData;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+
+        let markers = [];
+
+        function removeAllMarkers() {
+            markers.forEach(marker => {
+                marker.setMap(null);
+            });
+
+            markers = [];
+        }
+
 
 
         function registerDepositFilterHandlers() {
@@ -263,7 +363,7 @@
                 </button>
                 <div class="filter-content roomfilter-content">
                     <label><input type="checkbox" value="원룸">원룸</label>
-                    <label><input type="checkbox" value="투·쓰리룸">투·쓰리룸</label>
+                    <label><input type="checkbox" value="투ㆍ쓰리룸">투ㆍ쓰리룸</label>
                     <label><input type="checkbox" value="오피스텔">오피스텔</label>
                     <label><input type="checkbox" value="아파트">아파트</label>
                 </div>
@@ -313,38 +413,6 @@
     <script>
         var mapDiv = document.getElementById('map');
         var map = new naver.maps.Map(mapDiv);
-
-        async function displayMarkersOnMap() {
-            try {
-                // 데이터베이스에서 위도(latitude)와 경도(longitude) 데이터를 가져옵니다.
-                const response = await fetch('/get-locations-from-database'); // 적절한 엔드포인트를 사용하세요
-                const locationsData = await response.json();
-
-                // 지도를 표시할 div 요소를 가져옵니다.
-                const mapDiv = document.getElementById('map');
-
-                // 지도의 중심 좌표를 설정합니다. 예시로 첫 번째 위치를 중심으로 설정합니다.
-                const firstLocation = locationsData[0];
-                const mapCenter = new naver.maps.LatLng(firstLocation.latitude, firstLocation.longitude);
-
-                // 지도를 생성합니다.
-                const map = new naver.maps.Map(mapDiv, {
-                    center: mapCenter, // 중심 좌표 설정
-                    zoom: 13 // 지도 확대 레벨 설정
-                });
-
-                // 데이터베이스에서 가져온 모든 위치에 대해 마커를 생성하고 지도에 표시합니다.
-                locationsData.forEach(location => {
-                    const markerPosition = new naver.maps.LatLng(location.latitude, location.longitude);
-                    const marker = new naver.maps.Marker({
-                        position: markerPosition, // 마커 위치 설정
-                        map: map // 마커를 표시할 지도 객체 설정
-                    });
-                });
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
     </script>
 </body>
 </html>

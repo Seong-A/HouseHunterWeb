@@ -197,12 +197,47 @@ app.get('/map', (req, res) => {
     res.render('map', { naverMapAPIClientID: process.env.REACT_APP_API_CLIENT_ID });
 });
 
-app.get('/get-locations-from-database', (req, res) => {
-    const query = 'SELECT latitude, longitude FROM house';
+app.get('/get-all-markers', (req, res) => {
+    connection.query('SELECT latitude, longitude FROM house', (error, results, fields) => {
+        if (error) {
+            console.error('Error fetching markers:', error);
+            res.status(500).json({ success: false, message: 'Internal server error' });
+        } else {
+            res.json(results);
+        }
+    });
+});
 
+app.get('/get-markers-by-roomtypes', (req, res) => {
+    let selectedRoomTypes = req.query.roomTypes;
+
+    if (Array.isArray(selectedRoomTypes)) {
+        selectedRoomTypes = selectedRoomTypes.join(',');
+    }
+
+    if (typeof selectedRoomTypes !== 'string') {
+        return res.status(400).json({ success: false, message: '방형태 선택이 필요함' });
+    }
+
+    selectedRoomTypes = selectedRoomTypes.split(',');
+
+    let query = '';
+
+    if (selectedRoomTypes.length > 0) {
+        query = 'SELECT latitude, longitude FROM house WHERE ';
+        selectedRoomTypes.forEach((roomType, index) => {
+            query += `rtype = "${roomType}"`;
+            if (index !== selectedRoomTypes.length - 1) {
+                query += ' OR ';
+            }
+        });
+    } else {
+        query = 'SELECT latitude, longitude FROM house';
+    }
+    
     connection.query(query, (error, results, fields) => {
         if (error) {
-            console.error('위치 정보 가져오기 오류:', error);
+            console.error('마커 정보 가져오기 오류 :', error);
             res.status(500).json({ success: false, message: '내부 서버 오류' });
         } else {
             res.json(results);

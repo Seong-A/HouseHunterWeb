@@ -5,7 +5,7 @@
 }
 
 .container {
-    text-align: center; /* .container의 내용을 가운데 정렬합니다. */
+    text-align: center; 
 }
 
 .container > h1 {
@@ -92,7 +92,7 @@
 }
 
 .filter-content.roomfilter-content label input[type="checkbox"] {
-    margin-right: 10px; /* 체크박스와 텍스트 사이의 오른쪽 여백을 추가합니다. */
+    margin-right: 10px; 
 }
 
 .filter-content.depositfilter-content input {
