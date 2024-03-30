@@ -41,7 +41,7 @@ app.get('/room1', (req, res) => {
 });
 
 app.get('/room1_info', (req, res) => {
-    const query = "SELECT photo1, photo2, monthly_money, fix_money, locate, rtype, floor, management_money FROM house WHERE rtype = '원룸'";
+    const query = "SELECT id, photo1, photo2, monthly_money, fix_money, locate, rtype, floor, management_money FROM house WHERE rtype = '원룸'";
   
     connection.query(query, (error, results, fields) => {
         if (error) {
@@ -50,6 +50,7 @@ app.get('/room1_info', (req, res) => {
         } else {
             if (results.length > 0) {
                 const room1Info = results.map(result => ({
+                    id: result.id,
                     photo1: result.photo1,
                     photo2: result.photo2,
                     fix_money: result.fix_money,
@@ -72,7 +73,7 @@ app.get('/room2', (req, res) => {
 });
 
 app.get('/room2_info', (req, res) => {
-    const query = "SELECT photo1, photo2, monthly_money, fix_money, locate, rtype, floor, management_money FROM house WHERE rtype = '투ㆍ쓰리룸'";
+    const query = "SELECT id, photo1, photo2, monthly_money, fix_money, locate, rtype, floor, management_money FROM house WHERE rtype = '투ㆍ쓰리룸'";
   
     connection.query(query, (error, results, fields) => {
         if (error) {
@@ -81,6 +82,7 @@ app.get('/room2_info', (req, res) => {
         } else {
             if (results.length > 0) {
                 const room2Info = results.map(result => ({
+                    id: result.id,
                     photo1: result.photo1,
                     photo2: result.photo2,
                     fix_money: result.fix_money,
@@ -103,7 +105,7 @@ app.get('/officetel', (req, res) => {
 });
 
 app.get('/officetel_info', (req, res) => {
-    const query = "SELECT photo1, photo2, monthly_money, fix_money, locate, rtype, floor, management_money FROM house WHERE rtype = '오피스텔'";
+    const query = "SELECT id, photo1, photo2, monthly_money, fix_money, locate, rtype, floor, management_money FROM house WHERE rtype = '오피스텔'";
   
     connection.query(query, (error, results, fields) => {
         if (error) {
@@ -112,6 +114,7 @@ app.get('/officetel_info', (req, res) => {
         } else {
             if (results.length > 0) {
                 const officetelInfo = results.map(result => ({
+                    id: result.id,
                     photo1: result.photo1,
                     photo2: result.photo2,
                     fix_money: result.fix_money,
@@ -134,7 +137,7 @@ app.get('/apartment', (req, res) => {
 });
 
 app.get('/apartment_info', (req, res) => {
-    const query = "SELECT photo1, photo2, monthly_money, fix_money, locate, rtype, floor, management_money FROM house WHERE rtype = '아파트'";
+    const query = "SELECT id, photo1, photo2, monthly_money, fix_money, locate, rtype, floor, management_money FROM house WHERE rtype = '아파트'";
   
     connection.query(query, (error, results, fields) => {
         if (error) {
@@ -143,6 +146,7 @@ app.get('/apartment_info', (req, res) => {
         } else {
             if (results.length > 0) {
                 const apartmentInfo = results.map(result => ({
+                    id: result.id,
                     photo1: result.photo1,
                     photo2: result.photo2,
                     fix_money: result.fix_money,
@@ -197,6 +201,24 @@ app.get('/map', (req, res) => {
     res.render('map', { naverMapAPIClientID: process.env.REACT_APP_API_CLIENT_ID });
 });
 
+// 해당 마커의 데이터를 가져오는 엔드포인트
+app.get('/get-room-data', (req, res) => {
+    const roomId = req.query.id;
+    
+    // MySQL 쿼리를 사용하여 데이터를 가져옴
+    const query = `SELECT * FROM house WHERE id = ${roomId}`;
+    connection.query(query, (err, results) => {
+      if (err) {
+        console.error('방 정보 불러오기 실패 :', err);
+        res.status(500).send('내부 서버 오류');
+        return;
+      }
+      
+      // 결과를 JSON 형식으로 반환
+      res.json(results[0]); // 첫 번째 결과만 사용하도록 가정
+    });
+  });
+
 app.get('/get-all-markers', (req, res) => {
     connection.query('SELECT id, latitude, longitude FROM house', (error, results, fields) => {
         if (error) {
@@ -207,7 +229,6 @@ app.get('/get-all-markers', (req, res) => {
         }
     });
 });
-
 
 app.get('/get-markers-by-roomtypes', (req, res) => {
     let selectedRoomTypes = req.query.roomTypes;
@@ -380,6 +401,39 @@ app.get('/current_user_info', (req, res) => {
     } else {
         res.status(401).json({ error: '로그인되지 않은 사용자' });
     }
+});
+
+app.get('/ai_info', (req, res) => {
+    const recentLocate = req.query.recentLocate; 
+
+    const query = `
+        SELECT id, photo1, monthly_money, fix_money, locate, rtype, floor, management_money 
+        FROM house 
+        WHERE locate = ?
+    `;
+  
+    connection.query(query, [recentLocate], (error, results, fields) => {
+        if (error) {
+            console.error('정보 가져오기 오류:', error);
+            res.status(500).json({ error: '내부 서버 오류' });
+        } else {
+            if (results.length > 0) {
+                const aiInfo = results.map(result => ({
+                    id: result.id,
+                    photo1: result.photo1,
+                    fix_money: result.fix_money,
+                    monthly_money: result.monthly_money,
+                    management_money: result.management_money,
+                    locate: result.locate,
+                    rtype: result.rtype,
+                    floor: result.floor
+                }));
+                res.json(aiInfo);
+            } else {
+                res.status(404).json({ error: '정보를 찾을 수 없음' });
+            }
+        }
+    });
 });
 
 app.post('/update', (req, res) => {

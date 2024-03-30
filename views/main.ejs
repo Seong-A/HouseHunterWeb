@@ -18,8 +18,10 @@
                 })
                 .catch(error => console.error('Error:', error));
         }
-        
-        window.onload = loadHeader;
+
+        function saveLocateToLocalStorage(loc) {
+            localStorage.setItem('recentLocate', loc);
+        }
 
         async function checkLogin() {
             try {
@@ -55,6 +57,100 @@
             }
         }
 
+        function displayRecentLocate() {
+            const recentLocate = localStorage.getItem('recentLocate');
+            
+            if (recentLocate) {
+                const aiTitle = document.getElementById('ai'); 
+                aiTitle.textContent = recentLocate; 
+            }
+        }
+
+        function displayRoomInfo(data) {
+            const formRoom = document.querySelector('.form-room');
+            formRoom.innerHTML = ''; // 이전 페이지의 내용을 초기화
+
+            data.forEach(room => {
+                const formField = document.createElement('div');
+                formField.classList.add('form-field');
+                
+                const photo1 = document.createElement('img');
+                photo1.classList.add('field-label');
+                photo1.src = room.photo1;
+                formField.appendChild(photo1);
+
+                const roomInfoText = document.createElement('div');
+                roomInfoText.classList.add('roominfo-text');
+
+                const roomMoney = document.createElement('div');
+                roomMoney.id = 'room-money';
+                roomMoney.innerHTML = `<p> 월세 <span>${room.fix_money}</span> / <span>${room.monthly_money}</span></p>`;
+                roomInfoText.appendChild(roomMoney);
+
+                const roomType = document.createElement('div');
+                roomType.id = 'room-type';
+                roomType.innerHTML = `<p><span>${room.rtype}</span>`;
+                roomInfoText.appendChild(roomType);
+
+                const roomInfo = document.createElement('div');
+                roomInfo.id = 'room-info';
+                roomInfo.innerHTML = `<p><span>${room.floor}</span>, 관리비 <span>${room.management_money}</span>만</p>`;
+                roomInfoText.appendChild(roomInfo);
+
+                // 클릭 이벤트 추가
+                formField.addEventListener('click', () => {
+                    // 각 원룸의 정보를 가진 페이지로 이동
+                    window.location.href = `/roomdetail?id=${room.id}`;
+                });
+
+                formField.appendChild(roomInfoText);
+                formRoom.appendChild(formField);
+            });
+        }
+
+        function fetchRoomInfo(recentLocate) {
+            fetch(`/ai_info?recentLocate=${recentLocate}`) 
+                .then(response => response.json())
+                .then(data => {
+                    displayRoomInfo(data);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function scrollLeft() {
+            const formRoom = document.getElementById('formRoom');
+            const lastChild = formRoom.lastElementChild; // 마지막 요소
+            const scrollAmount = 10;
+
+            formRoom.scrollLeft -= scrollAmount;
+
+            if (formRoom.scrollLeft <= 0) {
+                formRoom.insertBefore(lastChild.cloneNode(true), formRoom.firstElementChild);
+                formRoom.removeChild(lastChild);
+            }
+        }
+
+        function scrollRight() {
+            const formRoom = document.getElementById('formRoom');
+            const firstChild = formRoom.firstElementChild; // 첫 번째 요소
+            const scrollAmount = 10;
+
+            formRoom.scrollLeft += scrollAmount;
+
+            if (formRoom.scrollLeft >= (formRoom.scrollWidth - formRoom.clientWidth)) {
+                // 첫 번째 요소를 마지막으로 이동
+                formRoom.appendChild(firstChild.cloneNode(true));
+                formRoom.removeChild(firstChild);
+            }
+        }
+        
+        window.onload = function() {
+            loadHeader();
+            displayRecentLocate();
+            const recentLocate = localStorage.getItem('recentLocate');
+            fetchRoomInfo(recentLocate);
+            document.addEventListener('click', displayRecentLocate);
+        }
     </script>
 </head>
 <body>
@@ -80,9 +176,17 @@
             </div>
         </div>
         <div class="ai_layout">
-            <h2>💡 AI가 추천해주는</h2>
-            <h2 id="ai">00구</h2>
-            <h2>집</h2>
+            <div class="ai_title">
+                <h2>💡 AI가 추천해주는</h2>
+                <h2 id="ai">00구</h2>
+                <h2>집</h2>
+            </div>
+
+            <div class="ai-container">
+                <button class="scroll-button left" onclick="scrollLeft()">&lt;</button>
+                <ul class="form-room" id="formRoom"></ul>
+                <button class="scroll-button right" onclick="scrollRight()">&gt;</button>
+            </div>
         </div>
         <div class="event_layout">
             <h2>💌 이벤트</h2>
