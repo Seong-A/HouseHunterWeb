@@ -14,13 +14,45 @@
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('header-container').innerHTML = data;
-                    const loginButton = document.getElementById('login-button');
-                    if (loginButton) {
-                        loginButton.addEventListener('click', loginUser);
-                    }
+                    document.querySelector('.login-button').addEventListener('click', function() {
+                        checkLogin(); 
+                    });
                     updateUI();
                 })
                 .catch(error => console.error('Error:', error));
+        }
+        async function checkLogin() {
+            try {
+                const response = await fetch('/check-login');
+                const data = await response.json();
+
+                if (data.isLoggedIn) {
+                    window.location.href = '/mypage';
+                } else {
+                    window.location.href = '/login';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function updateUI() {
+            try {
+                const response = await fetch('/check-login');
+                const userData = await response.json();
+                const userNameDisplay = document.querySelector('.user-name');
+
+                if (userData.isLoggedIn) {
+                    const loginButton = document.querySelector('.login-button');
+                    loginButton.style.display = 'none'; 
+                    userNameDisplay.textContent = userData.userName; 
+                    userNameDisplay.style.display = 'inline-block';
+                } else {
+                    userNameDisplay.style.display = 'none'; 
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
 
         function displayRoomInfo(data) {
