@@ -447,4 +447,80 @@ app.post('/logout', (req, res) => {
     res.redirect('/'); 
 });
 
+app.post('/toggle-like', (req, res) => {
+    const {roomId } = req.body;
+    const userId = req.session.userId;
+
+    console.log(`userId: ${userId}, roomId: ${roomId}`);
+
+    // 먼저 is_like 테이블에서 해당 레코드가 있는지 확인
+    const checkQuery = 'SELECT is_like FROM is_like WHERE userId = ? AND roomId = ?';
+    const checkValues = [userId, roomId];
+
+    connection.query(checkQuery, checkValues, (error, results, fields) => {
+        if (error) {
+            console.error('좋아요 확인 오류:', error);
+            res.status(500).json({ success: false, message: '내부 서버 오류' });
+            return;
+        }
+
+        let isLiked;
+        let query;
+        let values;
+
+        if (results.length > 0) {
+            // 레코드가 있으면 좋아요 상태를 토글
+            isLiked = !results[0].is_like;
+            query = 'UPDATE is_like SET is_like = ? WHERE userId = ? AND roomId = ?';
+            values = [isLiked, userId, roomId];
+        } else {
+            // 레코드가 없으면 새로운 레코드 추가
+            isLiked = true;
+            query = 'INSERT INTO is_like (userId, roomId, is_like) VALUES (?, ?, ?)';
+            values = [userId, roomId, isLiked];
+        }
+
+        console.log(`User ${userId} toggled like status for room ${roomId} to ${isLiked ? 'liked' : 'unliked'}`);
+
+        connection.query(query, values, (error, results, fields) => {
+            if (error) {
+                console.error('좋아요 토글 오류:', error);
+                res.status(500).json({ success: false, message: '내부 서버 오류' });
+            } else {
+                res.status(200).json({ success: true, isLiked: isLiked });
+            }
+        });
+    });
+
+});
+
+app.post('/check-like', (req, res) => {
+    const { roomId } = req.body;
+    const userId = req.session.userId;
+
+    // 좋아요 기록을 확인하는 쿼리
+    const query = 'SELECT is_like FROM is_like WHERE userId = ? AND roomId = ?';
+    const values = [userId, roomId];
+
+    // 쿼리 실행
+    connection.query(query, values, (error, results, fields) => {
+        if (error) {
+            console.error('좋아요 확인 오류:', error);
+            res.status(500).json({ success: false, message: '내부 서버 오류' });
+            return;
+        }
+
+        // 결과가 있으면 해당 결과를 반환
+        if (results.length > 0) {
+            const isLiked = results[0].is_like;
+            res.status(200).json({ success: true, isLiked: isLiked });
+        } else {
+            // 결과가 없으면 좋아요한 기록이 없는 것이므로 false 반환
+            res.status(200).json({ success: true, isLiked: false });
+        }
+    });
+});
+
+
+
 module.exports = app;
