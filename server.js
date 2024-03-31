@@ -201,6 +201,21 @@ app.get('/map', (req, res) => {
     res.render('map', { naverMapAPIClientID: process.env.REACT_APP_API_CLIENT_ID });
 });
 
+app.get('/get-room-data', (req, res) => {
+    const roomId = req.query.id;
+
+    const query = `SELECT * FROM house WHERE id = ${roomId}`;
+    connection.query(query, (err, results) => {
+      if (err) {
+        console.error('방 정보 불러오기 실패 :', err);
+        res.status(500).send('내부 서버 오류');
+        return;
+      }
+
+      res.json(results[0]); 
+    });
+  });
+
 app.get('/get-all-markers', (req, res) => {
     connection.query('SELECT id, latitude, longitude FROM house', (error, results, fields) => {
         if (error) {
