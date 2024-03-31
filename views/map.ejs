@@ -114,100 +114,22 @@
             }
         }
 
+        let selectedRoomTypes = [];
+        let depositValue = null;
+        let monthlyValue = null;
+        let managementValue = null;
+
+        // 방유형 필터
         function registerRoomtypesHandlers() {
-            // 방유형 클릭하면 항목 나타남
             document.querySelector('.roomfilter').addEventListener('click', function() {
-                const filterContent = document.querySelector('.filter-content.roomfilter-content');
-                const applyButton = document.getElementById('applyRoomTypesButton');
-                
-                if (filterContent.style.display === 'none') {
-                    filterContent.style.display = 'block';
-                    applyButton.style.display = 'block';
-                } else {
-                    filterContent.style.display = 'none';
-                    applyButton.style.display = 'none';
-                }
+                toggleFilter('.filter-content.roomfilter-content', '#applyRoomTypesButton');
             });
 
-            // 항목 클릭하면 방유형에 선택한 내용 나타남
-            document.querySelectorAll('.applyRoomTypesButton').forEach(function(button) {
-                button.addEventListener('click', function() {
-                    const selectedRoomTypes = Array.from(document.querySelectorAll('.roomfilter-content input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
-                    const selectedRoomTypesContainer = document.getElementById('selectedRoomTypes');
-                    const roomTypeContainer = document.getElementById('roomtype');
-
-                    selectedRoomTypesContainer.innerHTML = '';
-                    roomTypeContainer.textContent = '';
-
-                    selectedRoomTypes.forEach(function(roomType, index) {
-                        const pElement = document.createElement('p');
-                        pElement.textContent = roomType;
-                        selectedRoomTypesContainer.appendChild(pElement);
-
-                        roomTypeContainer.textContent += roomType;
-                        if (index !== selectedRoomTypes.length - 1) {
-                            roomTypeContainer.textContent += ', ';
-                        }
-                    });
-
-                    if (selectedRoomTypes.length > 0) {
-                        roomTypeContainer.style.display = 'block';
-                        selectedRoomTypesContainer.style.display = 'none';
-                    } else {
-                        roomTypeContainer.style.display = 'none';
-                        selectedRoomTypesContainer.style.display = 'none';
-                    }
-
-                    displayFilteredMarkers(selectedRoomTypes.join(','));
-                    
-                    // 적용하기 누르면 항목 사라짐
-                    const filterContent = document.querySelector('.filter-content.roomfilter-content');
-                    const applyButton = document.getElementById('applyRoomTypesButton');
-                    filterContent.style.display = 'none';
-                    applyButton.style.display = 'none';
-
-                });
+            document.getElementById('applyRoomTypesButton').addEventListener('click', function() {
+                selectedRoomTypes = Array.from(document.querySelectorAll('.roomfilter-content input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
+                applyFilters();
             });
         }
-
-        async function displayFilteredMarkers(selectedRoomTypes) {
-            try {
-                const locationsData = await getFilteredMarkers(selectedRoomTypes);
-                removeAllMarkers();
-
-                // 지도의 중심 좌표
-                const firstLocation = locationsData[0];
-                const mapCenter = new naver.maps.LatLng(firstLocation.latitude, firstLocation.longitude);
-
-                // 지도를 생성
-                const map = new naver.maps.Map(mapDiv, {
-                    center: mapCenter, 
-                    zoom: 13 
-                });
-
-                locationsData.forEach(location => {
-                    const markerPosition = new naver.maps.LatLng(location.latitude, location.longitude);
-                    const marker = new naver.maps.Marker({
-                        position: markerPosition,
-                        map: map 
-                    });
-                    markers.push(marker);
-                });
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
-
-        async function getFilteredMarkers(selectedRoomTypes) {
-            try {
-                const response = await fetch('/get-markers-by-roomtypes?roomTypes=' + encodeURIComponent(selectedRoomTypes));
-                const locationsData = await response.json();
-                return locationsData;
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
-
 
         let markers = [];
 
@@ -219,165 +141,102 @@
             markers = [];
         }
 
-
-
+        // 보증금 필터
         function registerDepositFilterHandlers() {
-            // 보증금 클릭하면 입력창 나타남
             document.querySelector('.depositfilter').addEventListener('click', function() {
-                const filterContent = document.querySelector('.filter-content.depositfilter-content');
-                const applyButton = document.getElementById('applyDepositButton');
-                
-                if (filterContent.style.display === 'none') {
-                    filterContent.style.display = 'block';
-                    applyButton.style.display = 'block';
-                } else {
-                    filterContent.style.display = 'none';
-                    applyButton.style.display = 'none';
-                }
+                toggleFilter('.filter-content.depositfilter-content', '#applyDepositButton');
             });
 
-            // 적용하기 버튼 누르면 항목들 사라짐
-            document.getElementById('applyDepositButton').addEventListener('click', async function() {
-                const depositValue = parseInt(document.getElementById('depositInput').value.replace(/[^0-9]/g, ''));
-                console.log('Deposit:', depositValue);
-
-                try {
-                    const response = await fetch(`/get-markers-by-deposit?deposit=${depositValue}`);
-                    const locationsData = await response.json();
-
-                    displayMarkers(locationsData);
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-
-                const filterContent = document.querySelector('.filter-content.depositfilter-content');
-                const applyButton = document.getElementById('applyDepositButton');
-                filterContent.style.display = 'none';
-                applyButton.style.display = 'none';
-
-                document.getElementById('deposittype').textContent = "보증금 : " + depositValue;
+            document.getElementById('applyDepositButton').addEventListener('click', function() {
+                depositValue = parseInt(document.getElementById('depositInput').value.replace(/[^0-9]/g, ''));
+                applyFilters();
             });
-
 
             document.getElementById('depositInput').addEventListener('input', function() {
-                let depositValue = parseInt(this.value.replace(/[^0-9]/g, ''));
-
-                // 최대값 설정
-                const maxDeposit = 10000; // 1억
-                if (depositValue > maxDeposit) {
-                    depositValue = maxDeposit;
-                }
-
-                // 입력된 값을 다시 보증금 입력란에 설정
-                this.value = depositValue.toLocaleString() + " 만원"; 
-                document.getElementById('deposittype').textContent = depositValue.toLocaleString() + " 만원";
+                applyFilters();
             });
         }
 
+        // 월세 필터
         function registerMonthlyFilterHandlers() {
-            // 월세 클릭하면 입력창 나타남
             document.querySelector('.monthlyfilter').addEventListener('click', function() {
-                const filterContent = document.querySelector('.filter-content.monthlyfilter-content');
-                const applyButton = document.getElementById('applyMonthlyButton');
-                
-                if (filterContent.style.display === 'none') {
-                    filterContent.style.display = 'block';
-                    applyButton.style.display = 'block';
-                } else {
-                    filterContent.style.display = 'none';
-                    applyButton.style.display = 'none';
-                }
+                toggleFilter('.filter-content.monthlyfilter-content', '#applyMonthlyButton');
             });
 
-            // 적용하기 버튼 누르면 항목들 사라짐
-            document.getElementById('applyMonthlyButton').addEventListener('click', async function() {
-                const monthlyValue = parseInt(document.getElementById('monthlyInput').value.replace(/[^0-9]/g, ''));
-                console.log('Monthly:', monthlyValue);
-
-                try {
-                    const response = await fetch(`/get-markers-by-monthly?monthly=${monthlyValue}`);
-                    const locationsData = await response.json();
-
-                    displayMarkers(locationsData);
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-
-                const filterContent = document.querySelector('.filter-content.monthlyfilter-content');
-                const applyButton = document.getElementById('applyMonthlyButton');
-                filterContent.style.display = 'none';
-                applyButton.style.display = 'none';
-
-                document.getElementById('monthlytype').textContent = "월세 : " + monthlyValue;
+            document.getElementById('applyMonthlyButton').addEventListener('click', function() {
+                monthlyValue = parseInt(document.getElementById('monthlyInput').value.replace(/[^0-9]/g, ''));
+                applyFilters();
             });
 
             document.getElementById('monthlyInput').addEventListener('input', function() {
-                let monthlyValue = parseInt(this.value.replace(/[^0-9]/g, ''));
-
-                // 최대값 설정
-                const maxMonthly = 150; // 150만원
-                if (monthlyValue > maxMonthly) {
-                    monthlyValue = maxMonthly;
-                }
-
-                // 입력된 값을 다시 월세 입력란에 설정
-                this.value = monthlyValue.toLocaleString() + " 만원"; 
-                document.getElementById('monthlytype').textContent = monthlyValue.toLocaleString() + " 만원";
+                applyFilters();
             });
-
         }
 
+        // 관리비 필터
         function registerManagementFilterHandlers() {
-            // 관리비 클릭하면 입력창 나타남
             document.querySelector('.managementfilter').addEventListener('click', function() {
-                const filterContent = document.querySelector('.filter-content.managementfilter-content');
-                const applyButton = document.getElementById('applyManagementButton');
-                
-                if (filterContent.style.display === 'none') {
-                    filterContent.style.display = 'block';
-                    applyButton.style.display = 'block';
-                } else {
-                    filterContent.style.display = 'none';
-                    applyButton.style.display = 'none';
-                }
+                toggleFilter('.filter-content.managementfilter-content', '#applyManagementButton');
             });
 
-            // 적용하기 버튼 누르면 항목들 사라짐
-            document.getElementById('applyManagementButton').addEventListener('click', async function() {
-                const managementValue = parseInt(document.getElementById('managementInput').value.replace(/[^0-9]/g, ''));
-                console.log('Management:', managementValue);
-
-                try {
-                    const response = await fetch(`/get-markers-by-management?management=${managementValue}`);
-                    const locationsData = await response.json();
-
-                    displayMarkers(locationsData);
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-
-                const filterContent = document.querySelector('.filter-content.managementfilter-content');
-                const applyButton = document.getElementById('applyManagementButton');
-                filterContent.style.display = 'none';
-                applyButton.style.display = 'none';
-
-                document.getElementById('managementtype').textContent = "관리비 : " + managementValue;
+            document.getElementById('applyManagementButton').addEventListener('click', function() {
+                managementValue = parseInt(document.getElementById('managementInput').value.replace(/[^0-9]/g, ''));
+                applyFilters();
             });
 
             document.getElementById('managementInput').addEventListener('input', function() {
-                let managementValue = parseInt(this.value.replace(/[^0-9]/g, ''));
-
-                // 최대값 설정
-                const maxManagement = 30; // 30만원
-                if (managementValue > maxManagement) {
-                    managementValue = maxManagement;
-                }
-
-                // 입력된 값을 다시 관리비 입력란에 설정
-                this.value = managementValue.toLocaleString() + " 만원"; 
-                document.getElementById('managementtype').textContent = managementValue.toLocaleString() + " 만원";
+                applyFilters();
             });
         }
+
+        // 필터 선택하면 항목 나타나기
+        function toggleFilter(contentSelector, applyButtonSelector) {
+            const filterContent = document.querySelector(contentSelector);
+            const applyButton = document.querySelector(applyButtonSelector);
+
+            if (filterContent.style.display === 'none') {
+                filterContent.style.display = 'block';
+                applyButton.style.display = 'block';
+            } else {
+                filterContent.style.display = 'none';
+                applyButton.style.display = 'none';
+            }
+        }
+
+        // 필터 적용
+        async function applyFilters() {
+            try {
+                const filterCondition = {
+                    roomTypes: selectedRoomTypes.join(','),
+                    deposit: depositValue,
+                    monthly: monthlyValue,
+                    management: managementValue
+                };
+
+                const locationsData = await getFilteredMarkers(filterCondition);
+
+                displayMarkers(locationsData);
+            } catch (error) {
+                console.error('에러 :', error);
+            }
+        }
+
+        async function getFilteredMarkers(filterCondition) {
+            try {
+                const response = await fetch('/get-filtered-markers', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(filterCondition)
+                });
+                const locationsData = await response.json();
+                return locationsData;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
     </script>
 </head>
 <body>
