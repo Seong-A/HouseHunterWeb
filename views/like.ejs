@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HouseHunter LikePage</title>
+    <link rel="stylesheet" href="/stylesheets/like.css">
+    <script>
+        let currentPage = 1;
+        const itemsPerPage = 10; 
+
+        function loadHeader() {
+            fetch('/header') 
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header-container').innerHTML = data;
+                    updateUI();
+                })
+                .catch(error => console.error('Error:', error));
+
+            document.getElementById('login-button').addEventListener('click', loginUser);
+        }
+
+        async function checkLogin() {
+            try {
+                const response = await fetch('/check-login');
+                const data = await response.json();
+
+                if (data.isLoggedIn) {
+                    window.location.href = '/mypage';
+                } else {
+                    window.location.href = '/login';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function updateUI() {
+            try {
+                const response = await fetch('/check-login');
+                const userData = await response.json();
+                const userNameDisplay = document.querySelector('.user-name');
+
+                if (userData.isLoggedIn) {
+                    const loginButton = document.querySelector('.login-button');
+                    loginButton.style.display = 'none'; 
+                    userNameDisplay.textContent = userData.userName; 
+                    userNameDisplay.style.display = 'inline-block';
+                } else {
+                    userNameDisplay.style.display = 'none'; 
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function fetchLikedRooms() {
+            try {
+                const response = await fetch('/get-liked-rooms');
+                const likedRoomIds = await response.json();
+                return likedRoomIds;
+            } catch (error) {
+                console.error('Error fetching liked rooms:', error);
+            }
+        }
+
+        function displayRoomInfo(data) {
+            const formRoom = document.querySelector('.form-likeinfo');
+            formRoom.innerHTML = ''; // 이전 페이지의 내용을 초기화
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+
+            for (let i = startIndex; i < endIndex && i < data.length; i++) {
+                const room = data[i];
+
+                const formField = document.createElement('div');
+                formField.classList.add('form-field');
+                
+                const photo1 = document.createElement('img');
+                photo1.classList.add('field-label');
+                photo1.src = room.photo1;
+                formField.appendChild(photo1);
+
+                const roomInfoText = document.createElement('div');
+                roomInfoText.classList.add('likeinfo-text');
+
+                const roomMoney = document.createElement('div');
+                roomMoney.id = 'room-money';
+                roomMoney.innerHTML = `<p> ${room.mtype} <span>${room.fix_money}</span> / <span>${room.monthly_money}</span></p>`;
+                roomInfoText.appendChild(roomMoney);
+
+                const roomInfo = document.createElement('div');
+                roomInfo.id = 'room-info';
+                roomInfo.innerHTML = `<p><span>${room.rtype}</span>, <span>${room.floor}</span>, 관리비 <span>${room.management_money}</span>만</p>`;
+                roomInfoText.appendChild(roomInfo);
+
+                const locate = document.createElement('div');
+                locate.id = 'locate';
+                locate.innerHTML = `<p> 서울특별시 <span>${room.locate}</span></p>`;
+                roomInfoText.appendChild(locate);
+
+                // 클릭 이벤트 추가
+                formField.addEventListener('click', () => {
+                    // 각 원룸의 정보를 가진 페이지로 이동
+                    window.location.href = `/roomdetail?id=${room.id}`;
+                });
+
+                formField.appendChild(roomInfoText);
+                formRoom.appendChild(formField);
+            }
+
+            displayPagination(data.length);
+        }
+
+        function displayPagination(totalItems) {
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            const pagination = document.querySelector('.pagination');
+            pagination.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.addEventListener('click', () => {
+                    currentPage = i;
+                    fetchLikeInfo();
+                });
+                if (i === currentPage) {
+                    button.classList.add('active');
+                }
+                pagination.appendChild(button);
+            }
+        }
+
+        async function fetchLikeInfo() {
+            const likedRoomIds = await fetchLikedRooms();
+            fetch('/like_info')
+                .then(response => response.json())
+                .then(data => {
+                    const likedRooms = data.filter(room => likedRoomIds.includes(room.id));
+                    displayRoomInfo(likedRooms);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        window.onload = function() {
+            loadHeader();
+            fetchLikeInfo();
+        }
+
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <div class="likeinfo-container">
+        <h2 class="likeinfo-title">관심목록</h2>
+        <ul class="form-likeinfo"></ul>
+    </div>
+
+    <div class="pagination"></div>
+
+    <footer>
+        <p>하우스헌터</p>
+        <p>고객센터 02-111-2222</p>
+    </footer>
+</body>
+</html>

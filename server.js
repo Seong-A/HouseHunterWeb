@@ -498,6 +498,7 @@ app.post('/toggle-like', (req, res) => {
 
 });
 
+
 app.post('/check-like', (req, res) => {
     const { roomId } = req.body;
     const userId = req.session.userId;
@@ -523,6 +524,10 @@ app.post('/check-like', (req, res) => {
             res.status(200).json({ success: true, isLiked: false });
         }
     });
+});
+
+app.get('/like', (req, res) => {
+    res.render('like');
 });
 
 
