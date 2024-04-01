@@ -1,3 +1,4 @@
+/* 전체 페이지 스타일 */
 body {
     font-family: "Black Han Sans", sans-serif;
     margin: 0;
@@ -53,10 +54,10 @@ body {
     object-position: center;
 }
 
-.recentlyinfo-text {
+.recentinfo-text {
     margin-top: 10px;
     padding: 25px;
-    flex-grow: 1;
+    flex-grow: 1; /* 내부 요소들이 자동으로 높이를 차지하도록 설정 */
 }
 
 #room-money {
@@ -97,7 +98,7 @@ body {
     color: #fff;
 }
 
-
+/* 푸터 스타일 */
 footer {
     height: 80px;
     font-family: "Black Han Sans", sans-serif;
@@ -111,3 +112,16 @@ footer p {
     margin-bottom: 5px;
 }
 
+/* 미디어 쿼리 */
+@media screen and (max-width: 600px) {
+    /* 화면 너비가 600px 이하일 때의 스타일 */
+    header {
+        padding: 5px;
+    }
+    main {
+        padding: 10px;
+    }
+    footer {
+        padding: 5px;
+    }
+}
