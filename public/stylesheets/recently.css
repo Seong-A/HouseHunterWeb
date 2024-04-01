@@ -1,0 +1,113 @@
+body {
+    font-family: "Black Han Sans", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.recentlyinfo-container {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.recentlyinfo-title {
+    text-align: center;
+    font-size: 40px;
+    margin: 45px;
+    color: #EA3945;
+}
+
+.form-recentlyinfo {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 90px;
+    justify-content: center;
+}
+
+.form-field {
+    width: 460px; /* 2열로 배치하기 위해 너비 조정 */
+    height: 200px;
+    margin: 20px; /* 요소 간 간격 설정 */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+}
+
+.form-field:nth-child(odd) {
+    margin-left: 20px; /* 홀수 번째 요소의 왼쪽 마진을 0으로 설정 */
+    margin-right: auto; /* 홀수 번째 요소의 오른쪽 마진을 자동으로 설정하여 가운데 정렬 */
+}
+
+.field-label {
+    width: 200px;
+    height: 200px;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+}
+
+.recentlyinfo-text {
+    margin-top: 10px;
+    padding: 25px;
+    flex-grow: 1;
+}
+
+#room-money {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 30px;
+}
+
+#room-info {
+    font-size: 15px;
+    color: darkgray;
+    margin-bottom: 30px;
+}
+
+#locate {
+    font-size: 15px;
+    color: darkgray;
+    margin-bottom: 30px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 80px 0;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #f7f7f7;
+    cursor: pointer;
+}
+
+.pagination button.active {
+    background-color: #EA3945;
+    color: #fff;
+}
+
+
+footer {
+    height: 80px;
+    font-family: "Black Han Sans", sans-serif;
+    background-color: #c9c9c9;
+    color: #fff;
+    text-align: left;
+    padding: 40px 0 0 80px;
+}
+
+footer p {
+    margin-bottom: 5px;
+}
+

@@ -199,11 +199,49 @@ app.get('/loaduser', (req, res) => {
     }
 });
 app.get('/roomdetail', (req, res) => {
+    const roomId = req.query.id;
+    if (!req.session.recentlyViewedRooms) {
+        req.session.recentlyViewedRooms = [];
+    }
+    req.session.recentlyViewedRooms.push(roomId);
     res.render('roomdetail', { naverMapAPIClientID: process.env.REACT_APP_API_CLIENT_ID });
 });
 app.get('/map', (req, res) => {
     res.render('map', { naverMapAPIClientID: process.env.REACT_APP_API_CLIENT_ID });
 });
+
+app.get('/get-recently-viewed-rooms', (req, res) => {
+    const recentlyViewedRooms = req.session.recentlyViewedRooms || [];
+    res.json(recentlyViewedRooms);
+});
+
+app.post('/get-recent-room-info', (req, res) => {
+    const recentlyViewedRooms = req.body.recentlyViewedRooms;
+
+    if (recentlyViewedRooms.length === 0) {
+        // 빈 배열인 경우, 에러 메시지 또는 빈 배열 반환
+        res.json([]);
+        return;
+    }
+
+    const query = `
+        SELECT id, photo1, monthly_money, fix_money, locate, rtype, floor, management_money
+        FROM house
+        WHERE id IN (?)
+    `;
+
+    connection.query(query, [recentlyViewedRooms], (error, results, fields) => {
+        if (error) {
+            console.error('최근 본 방 정보 가져오기 오류:', error);
+            res.status(500).json({ error: '내부 서버 오류' });
+        } else {
+            res.json(results);
+        }
+    });
+});
+app.get('/recently',(req,res) => {
+    res.render('recently');
+})
 
 app.get('/get-room-data', (req, res) => {
     const roomId = req.query.id;
@@ -278,9 +316,6 @@ app.get('/contents', (req, res) => {
     res.render('contents');
 });
 
-app.get('/roomdetail', (req, res) => {
-    res.render('roomdetail');
-});
 
 app.get('/help', (req, res) => {
     res.render('help');

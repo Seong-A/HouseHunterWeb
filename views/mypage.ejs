@@ -90,6 +90,10 @@
         function goToLikePage() {
             window.location.href = '/like';
         }
+
+        function goToRecentlyPage(){
+            window.location.href ='/recently';
+        }
     </script>
 </head>
 <body>
@@ -115,7 +119,7 @@
                 </div>
             </div>
             <div class="mypage_btn">
-                <button class="button">최근 본 집</button>
+                <button class="button" onclick="goToRecentlyPage()">최근 본 집</button>
                 <button class="button" onclick="goToLikePage()">찜한 집</button>
             </div>
         </div>
