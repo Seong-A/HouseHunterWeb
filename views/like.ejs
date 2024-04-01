@@ -14,13 +14,14 @@
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('header-container').innerHTML = data;
+                    document.querySelector('.login-button').addEventListener('click', function() {
+                        checkLogin(); 
+                    });
                     updateUI();
                 })
                 .catch(error => console.error('Error:', error));
-
-            document.getElementById('login-button').addEventListener('click', loginUser);
         }
-
+        
         async function checkLogin() {
             try {
                 const response = await fetch('/check-login');
@@ -64,6 +65,7 @@
                 console.error('Error fetching liked rooms:', error);
             }
         }
+
 
         function displayRoomInfo(data) {
             const formRoom = document.querySelector('.form-likeinfo');
@@ -135,14 +137,21 @@
 
         async function fetchLikeInfo() {
             const likedRoomIds = await fetchLikedRooms();
-            fetch('/like_info')
-                .then(response => response.json())
-                .then(data => {
-                    const likedRooms = data.filter(room => likedRoomIds.includes(room.id));
-                    displayRoomInfo(likedRooms);
-                })
-                .catch(error => console.error('Error:', error));
+            try {
+                const response = await fetch('/like_info', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ likedRoomIds })
+                });
+                const data = await response.json();
+                displayRoomInfo(data);
+            } catch (error) {
+                console.error('Error fetching liked rooms:', error);
+            }
         }
+
 
         window.onload = function() {
             loadHeader();

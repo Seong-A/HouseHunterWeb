@@ -530,6 +530,55 @@ app.get('/like', (req, res) => {
     res.render('like');
 });
 
+app.get('/get-liked-rooms', (req, res) => {
+    const userId = req.session.userId;
+    
+    if (!userId) {
+        res.status(401).json({ message: '로그인되지 않은 사용자' });
+        return;
+    }
 
+    const query = 'SELECT roomId FROM is_like WHERE userId = ? AND is_like = 1';
+
+    connection.query(query, [userId], (error, results, fields) => {
+        if (error) {
+            console.error('좋아요한 방 정보 가져오기 오류:', error);
+            res.status(500).json({ success: false, message: '내부 서버 오류' });
+        } else {
+            const likedRoomIds = results.map(result => result.roomId);
+            res.json(likedRoomIds);
+        }
+    });
+});
+
+app.post('/like_info', (req, res) => {
+    const likedRoomIds = req.body.likedRoomIds;
+    const query = "SELECT id, photo1, photo2, monthly_money, fix_money, locate, mtype, rtype, floor, management_money FROM house WHERE id IN (?)";
+  
+    connection.query(query, [likedRoomIds], (error, results, fields) => {
+        if (error) {
+            console.error('정보 가져오기 오류:', error);
+            res.status(500).json({ error: '내부 서버 오류' });
+        } else {
+            if (results.length > 0) {
+                const likeInfo = results.map(result => ({
+                    id: result.id,
+                    photo1: result.photo1,
+                    photo2: result.photo2,
+                    fix_money: result.fix_money,
+                    monthly_money: result.monthly_money,
+                    management_money: result.management_money,
+                    locate: result.locate,
+                    mtype: result.mtype,
+                    rtype: result.rtype,
+                    floor: result.floor
+                }));
+                res.json(likeInfo);
+            } else {
+                res.status(404).json({ error: '사용자 정보를 찾을 수 없음' });
+            }
+        }
+    });
+});
 
 module.exports = app;
