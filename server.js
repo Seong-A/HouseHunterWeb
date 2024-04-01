@@ -41,7 +41,7 @@ app.get('/room1', (req, res) => {
 });
 
 app.get('/room1_info', (req, res) => {
-    const query = "SELECT id, photo1, photo2, monthly_money, fix_money, locate, rtype, floor, management_money FROM house WHERE rtype = '원룸'";
+    const query = "SELECT id, photo1, photo2, monthly_money, fix_money, locate, mtype, rtype, floor, management_money FROM house WHERE rtype = '원룸'";
   
     connection.query(query, (error, results, fields) => {
         if (error) {
@@ -57,6 +57,7 @@ app.get('/room1_info', (req, res) => {
                     monthly_money: result.monthly_money,
                     management_money: result.management_money,
                     locate: result.locate,
+                    mtype: result.mtype,
                     rtype: result.rtype,
                     floor: result.floor
                 }));
@@ -73,7 +74,7 @@ app.get('/room2', (req, res) => {
 });
 
 app.get('/room2_info', (req, res) => {
-    const query = "SELECT id, photo1, photo2, monthly_money, fix_money, locate, rtype, floor, management_money FROM house WHERE rtype = '투ㆍ쓰리룸'";
+    const query = "SELECT id, photo1, photo2, monthly_money, fix_money, locate, mtype, rtype, floor, management_money FROM house WHERE rtype = '투ㆍ쓰리룸'";
   
     connection.query(query, (error, results, fields) => {
         if (error) {
@@ -89,6 +90,7 @@ app.get('/room2_info', (req, res) => {
                     monthly_money: result.monthly_money,
                     management_money: result.management_money,
                     locate: result.locate,
+                    mtype: result.mtype,
                     rtype: result.rtype,
                     floor: result.floor
                 }));
@@ -105,7 +107,7 @@ app.get('/officetel', (req, res) => {
 });
 
 app.get('/officetel_info', (req, res) => {
-    const query = "SELECT id, photo1, photo2, monthly_money, fix_money, locate, rtype, floor, management_money FROM house WHERE rtype = '오피스텔'";
+    const query = "SELECT id, photo1, photo2, monthly_money, fix_money, locate, mtype, rtype, floor, management_money FROM house WHERE rtype = '오피스텔'";
   
     connection.query(query, (error, results, fields) => {
         if (error) {
@@ -121,6 +123,7 @@ app.get('/officetel_info', (req, res) => {
                     monthly_money: result.monthly_money,
                     management_money: result.management_money,
                     locate: result.locate,
+                    mtype: result.mtype,
                     rtype: result.rtype,
                     floor: result.floor
                 }));
@@ -137,7 +140,7 @@ app.get('/apartment', (req, res) => {
 });
 
 app.get('/apartment_info', (req, res) => {
-    const query = "SELECT id, photo1, photo2, monthly_money, fix_money, locate, rtype, floor, management_money FROM house WHERE rtype = '아파트'";
+    const query = "SELECT id, photo1, photo2, monthly_money, fix_money, locate, mtype, rtype, floor, management_money FROM house WHERE rtype = '아파트'";
   
     connection.query(query, (error, results, fields) => {
         if (error) {
@@ -153,6 +156,7 @@ app.get('/apartment_info', (req, res) => {
                     monthly_money: result.monthly_money,
                     management_money: result.management_money,
                     locate: result.locate,
+                    mtype: result.mtype,
                     rtype: result.rtype,
                     floor: result.floor
                 }));
