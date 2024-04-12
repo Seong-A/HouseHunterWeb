@@ -11,6 +11,8 @@
 - node.js
 - express
 - mysql
+- nodemon
+- Naver Map API
 
 ## WorkPlan
 - Selection Topic
@@ -54,12 +56,13 @@
 
 | OfficetelPage             |
 |-------------------------|
-|<img width="1440" alt="image" src="https://github.com/Seong-A/HouseHunterWeb/assets/83965377/f243cbaf-ef24-4a52-8139-7c319b35fac0">|
+|<img width="640" alt="image" src="https://github.com/Seong-A/HouseHunterWeb/assets/83965377/f243cbaf-ef24-4a52-8139-7c319b35fac0">|
 
 
 ## Running Screen 
 ![mainpage](https://github.com/Seong-A/HouseHunterWeb/assets/83965377/d59dbc2d-641c-48b5-8d47-0969a7bf6cb2)
 ![roomdetailpage](https://github.com/Seong-A/HouseHunterWeb/assets/83965377/49a5a93a-ec56-44e3-a4a3-dd3996fc29dd)
+![map](https://github.com/Seong-A/HouseHunterWeb/assets/83965377/cf4149d0-45f7-4ae9-b096-d7c366a4342e)
 
 
 ## Contributors
