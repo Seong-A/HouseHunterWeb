@@ -54,9 +54,9 @@
 |-------------------------|-------------------------|
 |<img width="640" alt="image" src="https://github.com/Seong-A/HouseHunterWeb/assets/83965377/59861b3e-1688-496b-a757-8db0baef9bf7">|<img width="640" alt="image" src="https://github.com/Seong-A/HouseHunterWeb/assets/83965377/14874e70-5c23-4431-8586-46fc5802a6b0">|
 
-| OfficetelPage             |
-|-------------------------|
-|<img width="640" alt="image" src="https://github.com/Seong-A/HouseHunterWeb/assets/83965377/f243cbaf-ef24-4a52-8139-7c319b35fac0">|
+| RoomDetailPage             | RoomDetailPage             |
+|-------------------------|-------------------------|
+|<img width="640" alt="image" src="https://github.com/Seong-A/HouseHunterWeb/assets/83965377/11054d42-e814-403c-9853-3891b30b1316">|<img width="640" alt="image" src="https://github.com/Seong-A/HouseHunterWeb/assets/83965377/9eb38d3b-9137-4a44-9c4e-418c0cc62222">|
 
 
 ## Running Screen 
