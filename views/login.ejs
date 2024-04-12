@@ -16,6 +16,15 @@
 
         }
 
+        function loadFooter() {
+            fetch('/footer') 
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-container').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
         function loginUser() {
             var id = document.getElementById('id').value;
             var password = document.getElementById('password').value;
@@ -49,6 +58,7 @@
         window.onload = function() { 
             loadHeader();
             document.getElementById('login-button').addEventListener('click', loginUser);
+            loadFooter();
         };
 
     </script>
@@ -70,5 +80,7 @@
             <button type="button" class="join" onclick="location.href='join'">회원가입</button>
         </ul>
     </div>
+
+    <div id="footer-container"></div>
 </body>
 </html>

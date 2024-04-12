@@ -3,13 +3,13 @@ main {
     overflow: hidden;
 }
 
-.rtype_layout {
+.rtype-layout {
     text-align: center;
     padding-top: 50px;
     margin-bottom: 60px;
 }
 
-.rtype_btn {
+.rtype-btn {
     font-family: "Black Han Sans", sans-serif;
     background-color: white;
     color: black;
@@ -45,7 +45,7 @@ main {
     height: auto; 
 }
 
-.ai_layout {
+.ai-layout {
     font-family: "Black Han Sans", sans-serif;
     display: flex;
     flex-direction: column;
@@ -57,11 +57,11 @@ main {
     overflow-x: hidden;
 }
 
-.ai_title {
+.ai-title {
     display: flex;
 }
 
-.ai_title > h2 {
+.ai-title > h2 {
     margin-right: 10px;
 }
 
@@ -81,7 +81,7 @@ main {
     flex-wrap: nowrap;
     justify-content: flex-start;
     transition: transform 0.5s ease;
-    gap: 20px; 
+    gap: 22px; 
     margin: 0 0 10px 10px;
     width: fit-content;
 }
@@ -159,36 +159,29 @@ main {
     right: 0;
 }
 
-.event_layout {
+.event-layout {
     font-family: "Black Han Sans", sans-serif;
     margin: 0 140px 80px 140px; 
     text-align: center;
 }
 
-.event_layout h2 {
+.event-layout h2 {
     text-align: left;
     margin-left: 10px; 
     margin-bottom: 20px; 
 }
 
+.event-img {
+    display: flex;
+    flex-wrap: nowrap; /* 모든 이미지를 한 줄에 표시하기 위해 줄 바꿈 금지 */
+    overflow-x: auto;
+    gap: 20px;
+}
+
 .event {
-    margin-bottom: 20px;
-}
-
-/* 푸터 스타일 */
-footer {
-    height: 80px;
-    font-family: "Black Han Sans", sans-serif;
-    background-color: #c9c9c9;
-    color: #fff;
-    text-align: left;
-    padding: 40px 0 0 80px;
-}
-
-footer p {
-    margin-bottom: 5px;
-    width: fit-content;
-    margin: 0 auto;
+    flex: 0 0 auto;
+    max-width: 100%; /* 이미지가 부모 요소를 넘지 않도록 최대 너비 지정 */
+    height: auto;
 }
 
 /* 미디어 쿼리 */

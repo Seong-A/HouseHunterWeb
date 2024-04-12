@@ -1,0 +1,29 @@
+footer {
+    height: 150px;
+    font-family: "Black Han Sans", sans-serif;
+    background-color: #f4f4f4;
+    color: #616161;
+    text-align: left;
+    padding: 40px 100px;
+}
+
+.footer-menu {
+    margin: 10px;
+}
+
+.footer-menu > a {
+    color: #4b4b4b;
+    padding-right: 20px;
+    border-right: 1px solid #a4a4a4;
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+.horizontal-line {
+    border-top: 2px solid #4b4b4b; 
+    margin: 20px auto;
+}
+
+.footer-info > p {
+    margin: 10px 10px 0 10px;
+}

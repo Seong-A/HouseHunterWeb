@@ -20,7 +20,19 @@
             document.getElementById('join-button').addEventListener('click', registerUser);
         }
 
-        window.onload = loadHeader;
+        function loadFooter() {
+            fetch('/footer') 
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-container').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        window.onload = function() {
+            loadHeader();
+            loadFooter();
+        }
 
         async function checkLogin() {
             try {
@@ -124,5 +136,7 @@
             <button type="button" id="join-button" class="join">회원가입</button>
         </ul>
     </div>
+
+    <div id="footer-container"></div>
 </body>
 </html>

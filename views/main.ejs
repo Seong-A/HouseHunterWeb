@@ -19,6 +19,15 @@
                 .catch(error => console.error('Error:', error));
         }
 
+        function loadFooter() {
+            fetch('/footer') 
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-container').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
         function saveLocateToLocalStorage(loc) {
             localStorage.setItem('recentLocate', loc);
         }
@@ -109,7 +118,7 @@
         }
 
         function fetchRoomInfo(recentLocate) {
-            fetch(`/ai_info?recentLocate=${recentLocate}`) 
+            fetch(`/ai-info?recentLocate=${recentLocate}`) 
                 .then(response => response.json())
                 .then(data => {
                     displayRoomInfo(data);
@@ -150,6 +159,7 @@
             const recentLocate = localStorage.getItem('recentLocate');
             fetchRoomInfo(recentLocate);
             document.addEventListener('click', displayRecentLocate);
+            loadFooter();
         }
     </script>
 </head>
@@ -157,26 +167,26 @@
     <div id="header-container"></div>
 
     <main>
-        <div class="rtype_layout">
+        <div class="rtype-layout">
             <div class="rtype-container">
-                <a href="room1"><button class="rtype_btn">원룸</button></a>
+                <a href="room1"><button class="rtype-btn">원룸</button></a>
                 <img class="image-overlay" src="image/room1.gif" alt="room1">
             </div>
             <div class="rtype-container">
-                <a href="room2"><button class="rtype_btn">투룸, 쓰리룸</button></a>
+                <a href="room2"><button class="rtype-btn">투룸, 쓰리룸</button></a>
                 <img class="image-overlay" src="image/room2.gif" alt="room2">
             </div>
             <div class="rtype-container">
-                <a href="officetel"><button class="rtype_btn">오피스텔</button></a>
+                <a href="officetel"><button class="rtype-btn">오피스텔</button></a>
                 <img class="image-overlay" src="image/officetel.gif" alt="officetel">
             </div>
             <div class="rtype-container">
-                <a href="apartment"><button class="rtype_btn">아파트</button></a>
+                <a href="apartment"><button class="rtype-btn">아파트</button></a>
                 <img class="image-overlay" src="image/apartment.gif" alt="apartment">
             </div>
         </div>
-        <div class="ai_layout">
-            <div class="ai_title">
+        <div class="ai-layout">
+            <div class="ai-title">
                 <h2>💡 AI가 추천해주는</h2>
                 <h2 id="ai">00구</h2>
                 <h2>집</h2>
@@ -188,17 +198,16 @@
                 <button class="scroll-button right" onclick="scrollRight()">&gt;</button>
             </div>
         </div>
-        <div class="event_layout">
+        <div class="event-layout">
             <h2>💌 이벤트</h2>
-            <a href="#"><img class="event" src="image/event1.png"/></a>
-            <a href="#"><img class="event" src="image/event2.png"/></a>
+            <div class="event-img">
+                <a href="#"><img class="event" src="image/event1.png"/></a>
+                <a href="#"><img class="event" src="image/event2.png"/></a>
+            </div>
         </div>
     </main>
 
-    <footer>
-        <p>하우스헌터</p>
-        <p>고객센터 02-111-2222</p>
-    </footer>
+    <div id="footer-container"></div>
 
 </body>
 </html>

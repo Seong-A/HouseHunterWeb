@@ -179,41 +179,26 @@ body {
 
 .horizontal-line {
     border-top: 2px solid #000; 
-    margin-bottom: 20px;
-}
-
-/* 푸터 스타일 */
-footer {
-    height: 80px;
-    font-family: "Black Han Sans", sans-serif;
-    background-color: #c9c9c9;
-    color: #fff;
-    text-align: left;
-    padding: 40px 0 0 80px;
-}
-
-footer p {
-    margin-bottom: 5px;
-    width: fit-content;
-    margin: 0 auto;
+    margin-bottom: 10px;
+    width: 100%;
 }
 
 /* 미디어 쿼리 */
-@media screen and (max-width: 768px) {
-    /* 화면 너비가 768px 이하일 때의 스타일 */
+@media screen and (max-width: 500px) {
+    /* 화면 너비가 500px 이하일 때의 스타일 */
     header, footer {
+        padding: 5px;
+        margin: 0 auto;
+        width: fit-content;
+    }
+    main {
         padding: 10px;
+        margin: 0 auto;
+        width: fit-content;
     }
 
-    header h1 {
-        font-size: 28px;
-    }
-
-    .logo img {
-        height: 40px;
-    }
-
-    .nav a {
-        font-size: 16px; /* 내비게이션 링크 폰트 크기 조정 */
+    .image-overlay img {
+        max-width: 100%; 
+        height: auto; 
     }
 }

@@ -21,6 +21,15 @@
                 .catch(error => console.error('Error:', error));
         }
 
+        function loadFooter() {
+            fetch('/footer') 
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-container').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
         async function updateUI() {
             try {
                 const response = await fetch('/check-login');
@@ -55,6 +64,8 @@
                     document.getElementById('phoneSecond').value = phoneNumber.substring(7);
                 })
                 .catch(error => console.error('Error:', error));
+
+            loadFooter();
         }
         
         function updateUserInfo() {
@@ -155,5 +166,7 @@
             <button type="button" onclick="updateUserInfo()" class="update">정보 수정</button>
         </ul>
     </div>
+
+    <div id="footer-container"></div>
 </body>
 </html>

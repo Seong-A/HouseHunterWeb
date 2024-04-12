@@ -127,30 +127,22 @@ main {
     color: #c9c9c9;
 }
 
-/* 푸터 스타일 */
-footer {
-    height: 80px;
-    font-family: "Black Han Sans", sans-serif;
-    background-color: #c9c9c9;
-    color: #fff;
-    text-align: left;
-    padding: 40px 0 0 80px;
-}
-
-footer p {
-    margin-bottom: 5px;
-}
-
 /* 미디어 쿼리 */
-@media screen and (max-width: 600px) {
-    /* 화면 너비가 600px 이하일 때의 스타일 */
-    header {
+@media screen and (max-width: 500px) {
+    /* 화면 너비가 500px 이하일 때의 스타일 */
+    header, footer {
         padding: 5px;
+        margin: 0 auto;
+        width: fit-content;
     }
     main {
         padding: 10px;
+        margin: 0 auto;
+        width: fit-content;
     }
-    footer {
-        padding: 5px;
+
+    .image-overlay img {
+        max-width: 100%; 
+        height: auto; 
     }
 }

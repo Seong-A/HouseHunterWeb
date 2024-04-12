@@ -21,6 +21,16 @@
                 })
                 .catch(error => console.error('Error:', error));
         }
+
+        function loadFooter() {
+            fetch('/footer') 
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-container').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
         async function checkLogin() {
             try {
                 const response = await fetch('/check-login');
@@ -135,6 +145,7 @@
         window.onload = function() {
             loadHeader();
             fetchRoomInfo();
+            loadFooter();
         }
 
     </script>
@@ -149,10 +160,6 @@
 
     <div class="pagination"></div>
 
-    <footer>
-        <p>하우스헌터</p>
-        <p>고객센터 02-111-2222</p>
-    </footer>
-
+    <div id="footer-container"></div>
 </body>
 </html>

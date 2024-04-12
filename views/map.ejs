@@ -19,6 +19,15 @@
                 .catch(error => console.error('Error:', error));
         }
         
+        function loadFooter() {
+            fetch('/footer') 
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-container').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
         window.onload = function() {
             loadHeader();
             loadAllMarkers();
@@ -26,7 +35,7 @@
             registerDepositFilterHandlers();
             registerMonthlyFilterHandlers();
             registerManagementFilterHandlers();
-
+            loadFooter();
         };
 
         async function checkLogin() {
@@ -294,6 +303,8 @@
             <div class="map" id="map"></div>
             <code id="snippet" class="snippet"></code>
         </section>
+
+        <div id="footer-container"></div>
     </div>
 
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=<%= naverMapAPIClientID %>"></script>

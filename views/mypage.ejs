@@ -20,7 +20,19 @@
                 .catch(error => console.error('Error:', error));
         }
 
-        window.onload = loadHeader;
+        function loadFooter() {
+            fetch('/footer') 
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-container').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        window.onload = function() {
+            loadHeader();
+            loadFooter();
+        }
 
         document.addEventListener('DOMContentLoaded', function() {
             loadUser();
@@ -123,13 +135,9 @@
                 <button class="button" onclick="goToLikePage()">찜한 집</button>
             </div>
         </div>
-        
     </main>
 
-    <footer>
-        <p>하우스헌터</p>
-        <p>고객센터 02-111-2222</p>
-    </footer>
+    <div id="footer-container"></div>
 
 </body>
 </html>

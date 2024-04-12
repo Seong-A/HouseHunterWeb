@@ -18,8 +18,20 @@
             document.getElementById('login-button').addEventListener('click', loginUser);
         }
 
-        window.onload = loadHeader;
+        function loadFooter() {
+            fetch('/footer') 
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-container').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+        }
 
+        window.onload = function() {
+            loadHeader();
+            loadFooter();
+        }
+        
         async function updateUI() {
             try {
                 const response = await fetch('/check-login');
@@ -90,9 +102,6 @@
         </div>
     </main>
 
-    <footer>
-        <p>하우스헌터</p>
-        <p>고객센터 02-111-2222</p>
-    </footer>
+    <div id="footer-container"></div>
 </body>
 </html>

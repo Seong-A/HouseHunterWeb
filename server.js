@@ -36,6 +36,10 @@ app.get('/header', (req, res) => {
     res.render('header');
 });
 
+app.get('/footer', (req, res) => {
+    res.render('footer');
+});
+
 app.get('/room1', (req, res) => {
     res.render('room1');
 });

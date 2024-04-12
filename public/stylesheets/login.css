@@ -1,7 +1,6 @@
 .login-container {
     width: 500px;
-    margin: 0 auto;
-    margin-top: 100px;
+    margin: 150px auto 200px auto;
     padding: 20px;
 }
 
@@ -62,4 +61,24 @@
     width: 100%;
     height: auto;
     margin-top: 30px;
+}
+
+/* 미디어 쿼리 */
+@media screen and (max-width: 500px) {
+    /* 화면 너비가 500px 이하일 때의 스타일 */
+    header, footer {
+        padding: 5px;
+        margin: 0 auto;
+        width: fit-content;
+    }
+    main {
+        padding: 10px;
+        margin: 0 auto;
+        width: fit-content;
+    }
+
+    .image-overlay img {
+        max-width: 100%; 
+        height: auto; 
+    }
 }
